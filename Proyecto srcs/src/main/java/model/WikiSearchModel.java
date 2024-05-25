@@ -1,12 +1,28 @@
 package model;
 
-import java.util.ArrayList;
+import model.APIs.WikipediaSearchAPI;
+import model.listeners.WikiSearchModelListener;
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class WikiSearchModel {
-    private ArrayList<ModelListener> listeners = new ArrayList<>();
-    //aca iria las clases de las API
+    private WikipediaSearchAPI searchAPI;
+    private WikiSearchModelListener searchModelListener;
 
-    public void addListener(ModelListener listener) {
-        this.listeners.add(listener);
+    public WikiSearchModel() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://en.wikipedia.org/w/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        searchAPI = retrofit.create(WikipediaSearchAPI.class);
+    }
+    public void searchSeries(String termToSearch) {
+
+    }
+    private void notifySearchHasFinishedListener() {
+        searchModelListener.searchHasFinished();
+    }
+    public void setListener(WikiSearchModelListener searchModelListener) {
+        this.searchModelListener = searchModelListener;
     }
 }

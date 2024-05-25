@@ -13,22 +13,25 @@ import java.util.Set;
 
 import javax.swing.*;
 
+import model.APIs.WikipediaPageAPI;
+import model.APIs.WikipediaSearchAPI;
+import model.entities.SearchResult;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainWindow {
-  private JTextField textField1;
-  private JButton searchButton;
-  private JPanel contentPane;
-  private JTextPane selectedSeriesPane;
+  private JTextField searchTextField;  //searchView
+  private JButton searchButton; //searchView
+  private JPanel mainPanel; //generalView
+  private JTextPane selectedSeriesPane; //searchView
 
-  private JButton saveLocallyButton;
-  private JTabbedPane tabbedPane1;
-  private JPanel searchPanel;
-  private JPanel storagePanel;
-  private JComboBox savedShowsComboBox;
-  private JTextPane savedSeriesPane;
+  private JButton saveLocallyButton;  //storageView
+  private JTabbedPane tabbedPane1;  //generalView
+  private JPanel searchPanel; //searchView
+  private JPanel storagePanel;  //storageView
+  private JComboBox savedShowsComboBox; //storgeView
+  private JTextPane savedSeriesPane;  //storageView
 
   DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
   String selectedResultTitle = null; //For storage purposes, it may not coincide with the searched term (see below)
@@ -53,10 +56,10 @@ public class MainWindow {
     savedSeriesPane.setContentType("text/html");
     // this is needed to open a link in the browser
 
-    textField1.addActionListener(actionEvent -> {System.out.println("ACCION!!!");});
-    System.out.println("TYPED!!!");
-    textField1.addPropertyChangeListener(propertyChangeEvent -> {
-              System.out.println("TYPED!!!");
+    searchTextField.addActionListener(actionEvent -> {System.out.println("Search Field Text");});
+    System.out.println("Search Term Typed");
+    searchTextField.addPropertyChangeListener(propertyChangeEvent -> {
+              System.out.println("Search Term Typed 2");
     });
 
     //ToAlberto: They told us that you were having difficulties understanding this code,
@@ -71,7 +74,7 @@ public class MainWindow {
               Response<String> callForSearchResponse;
               try {
                 //ToAlberto: First, lets search for the term in Wikipedia
-                callForSearchResponse = searchAPI.searchForTerm(textField1.getText() + " (Tv series) articletopic:\"television\"").execute();
+                callForSearchResponse = searchAPI.searchForTerm(searchTextField.getText() + " (Tv series) articletopic:\"television\"").execute();
 
                 //Show the result for testing reasons, if it works, dont forget to delete!
                 System.out.println("JSON " + callForSearchResponse.body());
@@ -135,7 +138,7 @@ public class MainWindow {
                     }
                   });
                 }
-                searchOptionsMenu.show(textField1, textField1.getX(), textField1.getY());
+                searchOptionsMenu.show(searchTextField, searchTextField.getX(), searchTextField.getY());
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
@@ -143,7 +146,7 @@ public class MainWindow {
               //Now you can keep searching stuff!
               setWatingStatus();
     }).start());
-
+    //Search in Wikipedia
     saveLocallyButton.addActionListener(actionEvent -> {
       if(text != ""){
         // save to DB  <o/
@@ -155,7 +158,7 @@ public class MainWindow {
     savedShowsComboBox.addActionListener(actionEvent -> savedSeriesPane.setText(textToHtml(DataBase.getExtract(savedShowsComboBox.getSelectedItem().toString()))));
 
     JPopupMenu storedInfoPopup = new JPopupMenu();
-
+    //Stored Info
     JMenuItem deleteItem = new JMenuItem("Delete!");
     deleteItem.addActionListener(actionEvent -> {
         if(savedShowsComboBox.getSelectedIndex() > -1){
@@ -165,7 +168,7 @@ public class MainWindow {
         }
     });
     storedInfoPopup.add(deleteItem);
-
+    //Stored Info
     JMenuItem saveItem = new JMenuItem("Save Changes!");
     saveItem.addActionListener(actionEvent -> {
         // save to DB  <o/
@@ -211,7 +214,7 @@ public class MainWindow {
     JFrame frame = new JFrame("TV Series Info Repo");
 
 
-    frame.setContentPane(new MainWindow().contentPane);
+    frame.setContentPane(new MainWindow().mainPanel);
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     frame.pack();
     frame.setVisible(true);
