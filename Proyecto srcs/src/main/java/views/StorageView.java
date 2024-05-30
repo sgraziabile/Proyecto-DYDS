@@ -1,40 +1,25 @@
 package views;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
-import presenter.StoragePresenter;
-
 import javax.swing.*;
-import java.lang.reflect.Array;
 
-public class StorageView implements View {
+public class StorageView extends JPanel implements View {
 
+    private JComboBox savedShowsComboBox;
     private JPanel storagePanel;
     private JTextPane savedSeriesPane;
-    private JComboBox savedShowsComboBox;
-    private StoragePresenter storagePresenter;
 
-    public StorageView(StoragePresenter storagePresenter) {
-        this.storagePresenter = storagePresenter;
-        showSavedSeries();
-        setupSavedSeriesPaneContentType();
-        initListeners();
+    public StorageView() {
+        showView();
     }
     public void showView() {
         setupSavedSeriesPaneContentType();
+        initListeners();
     }
-
     public JPanel getContent() {
-        return storagePanel;
+        return this.getContent();
     }
     private void initListeners() {
 
-    }
-    private void showSavedSeries() {
-        Object[] savedSeries = storagePresenter.getSavedSeries();
-        savedShowsComboBox.setModel(new DefaultComboBoxModel(savedSeries));
-    }
-    private Object[] getSavedSeries() {
-        return storagePresenter.getSavedSeries();
     }
     private void setupSavedSeriesPaneContentType() {
         savedSeriesPane.setContentType("text/html");

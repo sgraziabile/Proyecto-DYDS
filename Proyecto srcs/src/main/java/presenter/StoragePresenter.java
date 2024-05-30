@@ -5,7 +5,7 @@ import views.StorageView;
 
 import java.util.ArrayList;
 
-public class StoragePresenter {
+public class StoragePresenter implements Presenter{
 
     private StorageView storageView;
     private Thread taskThread;

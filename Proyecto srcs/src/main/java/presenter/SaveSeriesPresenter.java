@@ -3,7 +3,7 @@ package presenter;
 import model.DataBaseModel;
 import views.SearchView;
 
-public class SaveSeriesPresenter {
+public class SaveSeriesPresenter implements Presenter {
     private SearchView searchView;
     private DataBaseModel dataBaseModel;
     private Thread taskThread;

@@ -6,7 +6,7 @@ import model.listeners.WikiPageModelListener;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class WikiPageModel {
+public class WikiPageModel implements Model{
 
     private WikipediaPageAPI pageAPI;
     private WikiPageModelListener pageModelListener;

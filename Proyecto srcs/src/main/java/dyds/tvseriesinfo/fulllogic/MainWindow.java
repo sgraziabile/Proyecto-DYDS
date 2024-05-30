@@ -193,7 +193,7 @@ public class MainWindow {
     selectedSeriesPane.setEnabled(true);
   }
 
-  public static void main(String[] args) {
+ /* public static void main(String[] args) {
     try {
       // Set System L&F
       UIManager.put("nimbusSelection", new Color(247,248,250));
@@ -225,7 +225,7 @@ public class MainWindow {
 
     System.out.println(DataBase.getExtract("test"));
     System.out.println(DataBase.getExtract("nada"));
-  }
+  }*/
 
   public static String textToHtml(String text) {
 

@@ -5,7 +5,7 @@ import model.listeners.DataBaseModelListener;
 
 import java.util.ArrayList;
 
-public class DataBaseModel {
+public class DataBaseModel implements Model {
 
     private DataBaseModelListener dataBaseModelListener;
     private DataBase localDataBase;

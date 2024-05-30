@@ -1,48 +1,70 @@
 package views;
 
+import model.entities.SearchResult;
 import presenter.SaveSeriesPresenter;
 import presenter.SearchPresenter;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SearchView implements View {
+public class SearchView extends JPanel implements View {
 
-    private JPanel searchPanel;
-    private JButton searchButton;
-    private JButton saveLocallyButton;
-    private JTextPane selectedSeriesPane;
     private JTextField searchTextField;
-    private SearchPresenter searchPresenter;
-    private SaveSeriesPresenter saveSeriesPresenter;
+    private JButton searchButton;
+    private JTextPane selectedSeriesPane;
+    private JButton saveLocallyButton;
+    private JPanel searchPanel;
+    private JPopupMenu searchOptionsMenu;
+    SearchPresenter searchPresenter;
+    SaveSeriesPresenter saveSeriesPresenter;
 
-    public SearchView(SearchPresenter searchPresenter, SaveSeriesPresenter saveSeriesPresenter) {
-        this.searchPresenter = searchPresenter;
-        this.saveSeriesPresenter = saveSeriesPresenter;
+    public SearchView() {
+        setupSelectedSeriesPaneContentType();
         initListeners();
     }
     public void showView() {
         setupSelectedSeriesPaneContentType();
     }
-
-    public JPanel getContent() {
-        return searchPanel;
-    }
     private void initListeners() {
-
+        searchButton.addActionListener(actionEvent -> {
+            searchPresenter.onSearchButtonClicked();
+        });
+        saveLocallyButton.addActionListener(actionEvent -> {
+            searchPresenter.onSeriesMenuSelect();
+        });
     }
-    private void setupSelectedSeriesPaneContentType(){
+    public JPanel getContent() {
+        return this.getContent();
+    }
+    public void setSearchPresenter(SearchPresenter searchPresenter) {
+        this.searchPresenter = searchPresenter;
+    }
+    public void setSaveSeriesPresenter(SaveSeriesPresenter saveSeriesPresenter) {
+        this.saveSeriesPresenter = saveSeriesPresenter;
+    }
+    public String getSearchFieldText() {
+        return searchTextField.getText();
+    }
+    public void setSearchOptionsMenu(JPopupMenu searchOptionsMenu) {
+        this.searchOptionsMenu = searchOptionsMenu;
+    }
+    public void initSearchOptionListener(SearchResult searchResult) {
+        searchResult.addActionListener(actionEvent -> {
+            searchPresenter.onSeriesMenuSelect();
+        });
+    }
+    public void showSearchOptionsMenu() {
+        searchOptionsMenu.show(searchButton, 0, searchButton.getHeight());
+    }
+    private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
     }
-    private void setWorkingStatus() {
+    public void setWorkingStatus() {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(false);
         selectedSeriesPane.setEnabled(false);
     }
-    private void setWatingStatus() {
+    public void setWaitingStatus() {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(true);
         selectedSeriesPane.setEnabled(true);
     }
-
-
-
 }
