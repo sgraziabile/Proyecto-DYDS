@@ -40,6 +40,5 @@ public class StoragePresenter implements Presenter{
     }
     public void onSavedSeriesSelected() {
         //DBModel getSeriesInfo()
-        System.out.println("Saved series selected");
     }
 }

@@ -47,6 +47,7 @@ public class Main {
 
         searchPresenter.setSearchView(searchView);
         saveSeriesPresenter.setSearchView(searchView);
+        saveSeriesPresenter.setSearchPresenter(searchPresenter);
 
         storagePresenter.setStorageView(storageView);
 

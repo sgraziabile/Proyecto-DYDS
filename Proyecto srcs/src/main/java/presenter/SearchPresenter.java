@@ -25,15 +25,14 @@ public class SearchPresenter implements Presenter{
     private Thread taskThread;
     private HtmlHandler htmlHandler;
     private JPopupMenu searchOptionsMenu;
+    private String lastSeriesTitle;
+
 
     public SearchPresenter(WikiSearchModel searchModel, WikiPageModel pageModel) {
         this.searchModel = searchModel;
         this.pageModel = pageModel;
         this.htmlHandler = new HtmlHandler();
         initListeners();
-    }
-    public void start() {
-        searchView.showView();
     }
     private void initListeners() {
         searchModel.setListener(new WikiSearchModelListener() {
@@ -56,6 +55,7 @@ public class SearchPresenter implements Presenter{
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
     }
+
     public void onSearchButtonClicked() {
         searchView.setWaitingStatus();
         requestSearch(searchView.getSearchFieldText());
@@ -108,7 +108,6 @@ public class SearchPresenter implements Presenter{
         try {
             Response<String> lastRetrievedSeries = pageModel.getLastRetrievedSeries();
             String retrievedSeriesExtract = "";
-            String retrievedSeriesTitle = "";
             Gson gson = new Gson();
             JsonObject jobj2 = gson.fromJson(lastRetrievedSeries.body(), JsonObject.class);
             JsonObject query2 = jobj2.get("query").getAsJsonObject();
@@ -122,7 +121,7 @@ public class SearchPresenter implements Presenter{
                 //generar ventana de error
             } else {
                 retrievedSeriesExtract = "<h1>" + searchResult.title + "</h1>";
-                retrievedSeriesTitle = searchResult.title;
+                lastSeriesTitle = searchResult.title;
                 retrievedSeriesExtract += searchResultExtract2.getAsString().replace("\\n", "\n");
                 retrievedSeriesExtract = htmlHandler.textToHtml(retrievedSeriesExtract);
                 searchView.showSelectedSeries(retrievedSeriesExtract);
@@ -136,6 +135,8 @@ public class SearchPresenter implements Presenter{
         searchOptionsMenu.add(searchResult);
         searchView.initSearchOptionListener(searchResult);
     }
-
+    public String getLastSeriesTitle() {
+        return lastSeriesTitle;
+    }
 
 }

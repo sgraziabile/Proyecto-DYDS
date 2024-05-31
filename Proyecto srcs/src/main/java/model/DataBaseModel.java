@@ -19,4 +19,8 @@ public class DataBaseModel implements Model {
     public ArrayList<String> getSavedSeriesTitles() {
         return localDataBase.getTitles();
     }
+    public void saveSeries(String seriesTitle, String seriesExctract) {
+        DataBase.saveInfo(seriesTitle.replace("'", "`"),seriesExctract );
+
+    }
 }

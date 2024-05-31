@@ -24,7 +24,6 @@ public class SearchView extends JPanel implements View {
         this.saveSeriesPresenter = saveSeriesPresenter;
         showView();
         initListeners();
-        System.out.println("SearchView created");
     }
     public SearchView() {
         showView();
@@ -36,7 +35,6 @@ public class SearchView extends JPanel implements View {
     private void initListeners() {
         searchButton.addActionListener(actionEvent -> {
             searchPresenter.onSearchButtonClicked();
-            System.out.println("Search button clicked");
         });
         saveLocallyButton.addActionListener(actionEvent -> {
             saveSeriesPresenter.onSavedLocallyButtonClicked();
@@ -68,6 +66,9 @@ public class SearchView extends JPanel implements View {
     }
     public void showSearchOptionsMenu() {
         searchOptionsMenu.show(searchButton, 0, searchButton.getHeight());
+    }
+    public String getSelectedSeriesPaneText() {
+        return selectedSeriesPane.getText();
     }
     private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
