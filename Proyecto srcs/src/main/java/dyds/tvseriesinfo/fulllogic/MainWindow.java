@@ -154,7 +154,7 @@ public class MainWindow {
         savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getTitles().stream().sorted().toArray()));
       }
     });
-
+    //mostrar info de serie guardada
     savedShowsComboBox.addActionListener(actionEvent -> savedSeriesPane.setText(textToHtml(DataBase.getExtract(savedShowsComboBox.getSelectedItem().toString()))));
 
     JPopupMenu storedInfoPopup = new JPopupMenu();

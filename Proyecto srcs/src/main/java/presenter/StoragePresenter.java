@@ -11,17 +11,15 @@ public class StoragePresenter implements Presenter{
     private Thread taskThread;
     private DataBaseModel dataBaseModel;
 
-    public StoragePresenter(DataBaseModel dataBaseModel, StorageView storageView) {
+    public StoragePresenter(DataBaseModel dataBaseModel) {
         this.dataBaseModel = dataBaseModel;
-        this.storageView = storageView;
         initListeners();
-
-    }
-    public void start() {
-        storageView.showView();
     }
     private void initListeners() {
 
+    }
+    public void setDataBaseModel(DataBaseModel dataBaseModel) {
+        this.dataBaseModel = dataBaseModel;
     }
     public void setStorageView(StorageView storageView) {
         this.storageView = storageView;
@@ -39,5 +37,9 @@ public class StoragePresenter implements Presenter{
     }
     public void onDeleteClick() {
         //DBModel deleteSeries()
+    }
+    public void onSavedSeriesSelected() {
+        //DBModel getSeriesInfo()
+        System.out.println("Saved series selected");
     }
 }

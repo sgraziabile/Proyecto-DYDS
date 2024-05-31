@@ -19,12 +19,13 @@ public class WikiSearchModel implements Model{
         searchAPI = retrofit.create(WikipediaSearchAPI.class);
     }
     public void searchTerm(String termToSearch) {
-        Response<String> callForSearchResponse;
+        Response<String> callForSearchResponse = null;
         try {
             callForSearchResponse = searchAPI.searchForTerm(termToSearch + " (Tv series) articletopic:\"television\"").execute();
         } catch(Exception e) {
             System.out.println("No result found for term."); //crear una ventana que avise del error
         }
+        lastSearchResult = callForSearchResponse;
         notifySearchHasFinishedListener();
     }
     public Response<String> getLastSearchResult() {

@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class DataBaseModel implements Model {
 
-    private DataBaseModelListener dataBaseModelListener;
+    private ArrayList<DataBaseModelListener> dataBaseModelListener;
     private DataBase localDataBase;
 
     public DataBaseModel() {
 
     }
     public void setListener(DataBaseModelListener dataBaseModelListener) {
-        this.dataBaseModelListener = dataBaseModelListener;
+        this.dataBaseModelListener.add(dataBaseModelListener);
     }
     public ArrayList<String> getSavedSeriesTitles() {
         return localDataBase.getTitles();

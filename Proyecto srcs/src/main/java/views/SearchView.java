@@ -15,11 +15,19 @@ public class SearchView extends JPanel implements View {
     private JButton saveLocallyButton;
     private JPanel searchPanel;
     private JPopupMenu searchOptionsMenu;
-    SearchPresenter searchPresenter;
-    SaveSeriesPresenter saveSeriesPresenter;
+    private SearchPresenter searchPresenter;
+    private SaveSeriesPresenter saveSeriesPresenter;
 
+
+    public SearchView(SearchPresenter searchPresenter, SaveSeriesPresenter saveSeriesPresenter) {
+        this.searchPresenter = searchPresenter;
+        this.saveSeriesPresenter = saveSeriesPresenter;
+        showView();
+        initListeners();
+        System.out.println("SearchView created");
+    }
     public SearchView() {
-        setupSelectedSeriesPaneContentType();
+        showView();
         initListeners();
     }
     public void showView() {
@@ -28,9 +36,10 @@ public class SearchView extends JPanel implements View {
     private void initListeners() {
         searchButton.addActionListener(actionEvent -> {
             searchPresenter.onSearchButtonClicked();
+            System.out.println("Search button clicked");
         });
         saveLocallyButton.addActionListener(actionEvent -> {
-            searchPresenter.onSeriesMenuSelect();
+            saveSeriesPresenter.onSavedLocallyButtonClicked();
         });
     }
     public JPanel getContent() {
@@ -50,8 +59,12 @@ public class SearchView extends JPanel implements View {
     }
     public void initSearchOptionListener(SearchResult searchResult) {
         searchResult.addActionListener(actionEvent -> {
-            searchPresenter.onSeriesMenuSelect();
+            searchPresenter.onSeriesMenuSelect(searchResult);
         });
+    }
+    public void showSelectedSeries(String seriesExtract) {
+        selectedSeriesPane.setText(seriesExtract);
+        selectedSeriesPane.setCaretPosition(0);
     }
     public void showSearchOptionsMenu() {
         searchOptionsMenu.show(searchButton, 0, searchButton.getHeight());
@@ -59,6 +72,7 @@ public class SearchView extends JPanel implements View {
     private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
     }
+
     public void setWorkingStatus() {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(false);
         selectedSeriesPane.setEnabled(false);

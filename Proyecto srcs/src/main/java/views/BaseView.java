@@ -8,11 +8,11 @@ public class BaseView implements View {
     private JPanel searchPanel;
     private JPanel storagePanel;
     private JPanel mainPanel;
-    private StorageView storageView1;
-    private SearchView searchView;
     private StorageView storageView;
+    private SearchView searchView;
 
     public BaseView() {
+        System.out.println("BaseView created");
     }
     public void showView() {
         JFrame mainFrame = new JFrame("TV Series Info Repo");
@@ -26,27 +26,17 @@ public class BaseView implements View {
         return this.getContent();
     }
 
-    public void setData(SearchView data) {
-    }
-
-    public void getData(SearchView data) {
-    }
-
-    public boolean isModified(SearchView data) {
-        return false;
-    }
-
-    public void setData(StorageView data) {
-    }
-
-    public void getData(StorageView data) {
-    }
     public void setStorageView(StorageView storageView) {
         this.storageView = storageView;
     }
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
     }
-
+    public SearchView getSearchView() {
+        return searchView;
+    }
+    public StorageView getStorageView() {
+        return storageView;
+    }
 
 }

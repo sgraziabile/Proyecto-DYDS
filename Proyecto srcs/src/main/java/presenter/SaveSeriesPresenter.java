@@ -8,9 +8,8 @@ public class SaveSeriesPresenter implements Presenter {
     private DataBaseModel dataBaseModel;
     private Thread taskThread;
 
-    public SaveSeriesPresenter(DataBaseModel dataBaseModel, SearchView searchView) {
+    public SaveSeriesPresenter(DataBaseModel dataBaseModel) {
         this.dataBaseModel = dataBaseModel;
-        this.searchView = searchView;
         initListeners();
     }
     public void start() {
@@ -21,6 +20,9 @@ public class SaveSeriesPresenter implements Presenter {
     }
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
+    }
+    public void setDataBaseModel(DataBaseModel dataBaseModel) {
+        this.dataBaseModel = dataBaseModel;
     }
     public void onSavedLocallyButtonClicked() {
         //DBModel.saveSeries()
