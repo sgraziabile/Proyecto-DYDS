@@ -30,11 +30,20 @@ public class Main {
     }
         WikiSearchModel wikiSearchModel = new WikiSearchModel();
         WikiPageModel wikiPageModel = new WikiPageModel();
+        RetrieveSeriesModel retrieveSeriesModel = new RetrieveSeriesModel();
+        SaveChangesModel saveChangesModel = new SaveChangesModel();
+        DeleteSeriesModel deleteSeriesModel = new DeleteSeriesModel();
+        SaveSeriesModel saveSeriesModel = new SaveSeriesModel();
+        SeriesContentModel seriesContentModel = new SeriesContentModel();
         DataBaseModel dataBaseModel = new DataBaseModel();
 
         SearchPresenter searchPresenter = new SearchPresenter(wikiSearchModel,wikiPageModel);
-        SaveSeriesPresenter saveSeriesPresenter = new SaveSeriesPresenter(dataBaseModel);
-        StoragePresenter storagePresenter = new StoragePresenter(dataBaseModel);
+        SaveSeriesPresenter saveSeriesPresenter = new SaveSeriesPresenter(saveSeriesModel);
+        StoragePresenter storagePresenter = new StoragePresenter(retrieveSeriesModel, saveChangesModel, deleteSeriesModel, seriesContentModel);
+
+        storagePresenter.setDataBaseModel(dataBaseModel);
+        storagePresenter.setSaveChangesModel(saveChangesModel);
+        storagePresenter.setDeleteSeriesModel(deleteSeriesModel);
 
         BaseView baseView = new BaseView();
         SearchView searchView = baseView.getSearchView();
@@ -43,15 +52,18 @@ public class Main {
         searchView.setSaveSeriesPresenter(saveSeriesPresenter);
         storageView.setStoragePresenter(storagePresenter);
         baseView.showView();
-        storageView.showSavedSeries();
 
         searchPresenter.setSearchView(searchView);
         saveSeriesPresenter.setSearchView(searchView);
         saveSeriesPresenter.setSearchPresenter(searchPresenter);
+        saveSeriesPresenter.setStoragePresenter(storagePresenter);
 
         storagePresenter.setStorageView(storageView);
 
-        DataBase.loadDatabase();
-        DataBase.saveInfo("test", "sarasa");
+        DataBase localDataBase = new DataBase();
+        localDataBase.loadDatabase();
+        localDataBase.saveInfo("test", "sarasa");
+
+        storageView.requestSavedSeries();
     }
 }

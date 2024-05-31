@@ -11,15 +11,9 @@ public class StorageView extends JPanel implements View {
     private JTextPane savedSeriesPane;
     private StoragePresenter storagePresenter;
 
-    public StorageView(StoragePresenter storagePresenter) {
-        this.storagePresenter = storagePresenter;
-        //showSavedSeries();
-        showView();
-        initListeners();
-        System.out.println("StorageView created");
-    }
     public StorageView() {
         showView();
+        initListeners();
     }
 
     public void showView() {
@@ -36,9 +30,17 @@ public class StorageView extends JPanel implements View {
             storagePresenter.onSavedSeriesSelected();
         });
     }
-    public void showSavedSeries() {
-        Object[] savedSeries = storagePresenter.getSavedSeries();
+    public void requestSavedSeries() {
+        storagePresenter.getSavedSeries();
+    }
+    public void showSavedSeries(Object[] savedSeries) {
         savedShowsComboBox.setModel(new DefaultComboBoxModel(savedSeries));
+    }
+    public void showSavedSeriesContent(String seriesContent) {
+        savedSeriesPane.setText(seriesContent);
+    }
+    public Object getSelectedSavedSeries() {
+        return savedShowsComboBox.getSelectedItem();
     }
     private void setupSavedSeriesPaneContentType() {
         savedSeriesPane.setContentType("text/html");

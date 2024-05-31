@@ -18,13 +18,6 @@ public class SearchView extends JPanel implements View {
     private SearchPresenter searchPresenter;
     private SaveSeriesPresenter saveSeriesPresenter;
 
-
-    public SearchView(SearchPresenter searchPresenter, SaveSeriesPresenter saveSeriesPresenter) {
-        this.searchPresenter = searchPresenter;
-        this.saveSeriesPresenter = saveSeriesPresenter;
-        showView();
-        initListeners();
-    }
     public SearchView() {
         showView();
         initListeners();

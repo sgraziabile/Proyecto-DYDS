@@ -1,30 +1,35 @@
 package presenter;
 
 import model.DataBaseModel;
+import model.SaveSeriesModel;
 import views.SearchView;
 
 public class SaveSeriesPresenter implements Presenter {
     private SearchView searchView;
-    private DataBaseModel dataBaseModel;
+    private SaveSeriesModel saveSeriesModel;
     private Thread taskThread;
     private SearchPresenter searchPresenter;
+    private StoragePresenter storagePresenter;
 
-    public SaveSeriesPresenter(DataBaseModel dataBaseModel) {
-        this.dataBaseModel = dataBaseModel;
+    public SaveSeriesPresenter(SaveSeriesModel saveSeriesModel) {
+        this.saveSeriesModel = saveSeriesModel;
         initListeners();
     }
     private void initListeners() {
-
+        saveSeriesModel.setListener(() -> {
+            storagePresenter.updateSavedSeriesContent();
+        });
     }
     public void setSearchPresenter(SearchPresenter searchPresenter) {
         this.searchPresenter = searchPresenter;
     }
+    public void setStoragePresenter(StoragePresenter storagePresenter) {
+        this.storagePresenter = storagePresenter;
+    }
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
     }
-    public void setDataBaseModel(DataBaseModel dataBaseModel) {
-        this.dataBaseModel = dataBaseModel;
-    }
+    public void setSaveSeriesModel(SaveSeriesModel saveSeriesModel) {this.saveSeriesModel = saveSeriesModel;}
     public void onSavedLocallyButtonClicked() {
         String seriesTitle = searchPresenter.getLastSeriesTitle();
         String seriesExctract = searchView.getSelectedSeriesPaneText();
@@ -34,7 +39,7 @@ public class SaveSeriesPresenter implements Presenter {
     }
     private void requestSaveSeries(String seriesTitle, String seriesExctract) {
         taskThread = new Thread(() -> {
-            dataBaseModel.saveSeries(seriesTitle, seriesExctract);
+            saveSeriesModel.saveSeries(seriesTitle, seriesExctract);
         });
         taskThread.start();
     }
