@@ -2,7 +2,9 @@ package presenter;
 
 import model.*;
 import model.entities.HtmlHandler;
+import model.listeners.DeleteSeriesModelListener;
 import model.listeners.RetrieveSeriesModelListener;
+import model.listeners.SaveChangesModelListener;
 import model.listeners.SeriesContentModelListener;
 import views.StorageView;
 
@@ -40,6 +42,18 @@ public class StoragePresenter implements Presenter{
             @Override
             public void showSeriesContentHasFinished() {
                 showSelectedSeriesContent();
+            }
+        });
+        deleteSeriesModel.setListener(new DeleteSeriesModelListener() {
+            @Override
+            public void deleteSeriesHasFinished() {
+                updateSavedSeriesContent();
+            }
+        });
+        saveChangesModel.setListener(new SaveChangesModelListener() {
+            @Override
+            public void saveChangesHasFinished() {
+                //mostrar una ventana de que se guardó correctamente
             }
         });
     }
@@ -82,12 +96,30 @@ public class StoragePresenter implements Presenter{
     }
     public void updateSavedSeriesContent() {
         showSavedSeries();
+        storageView.clearSavedSeriesContent();
     }
     public void onSaveChangesClick() {
-        //DBModel saveChanges()
+        saveChanges();
+    }
+    private void saveChanges() {
+        Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
+        String modifiedExtract  = storageView.getSelectedSeriesContent();
+        taskThread = new Thread(() -> {
+            saveChangesModel.saveChanges(selectedSeriesTitle.toString(), modifiedExtract);
+        });
+        taskThread.start();
     }
     public void onDeleteClick() {
-        //DBModel deleteSeries()
+        if(storageView.isSelectedOption()) {
+            deleteSelectedSeries();
+        }
+    }
+    private void deleteSelectedSeries() {
+        Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
+        taskThread = new Thread(() -> {
+            deleteSeriesModel.deleteSeries(selectedSeriesTitle.toString());
+        });
+        taskThread.start();
     }
     public void onSavedSeriesSelected() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();

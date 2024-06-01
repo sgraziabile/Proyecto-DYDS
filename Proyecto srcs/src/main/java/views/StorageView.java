@@ -10,13 +10,24 @@ public class StorageView extends JPanel implements View {
     private JPanel storagePanel;
     private JTextPane savedSeriesPane;
     private StoragePresenter storagePresenter;
+    private JPopupMenu storageOptions;
+    private JMenuItem deleteSeries;
+    private JMenuItem saveChanges;
 
     public StorageView() {
         showView();
+        setOptionsMenu();
         initListeners();
     }
-
-    public void showView() {
+    private void setOptionsMenu() {
+        storageOptions = new JPopupMenu();
+        deleteSeries = new JMenuItem("Delete series");
+        saveChanges = new JMenuItem("Save changes!");
+        storageOptions.add(deleteSeries);
+        storageOptions.add(saveChanges);
+        savedSeriesPane.setComponentPopupMenu(storageOptions);
+    }
+    private void showView() {
         setupSavedSeriesPaneContentType();
     }
     public void setStoragePresenter(StoragePresenter storagePresenter) {
@@ -28,6 +39,12 @@ public class StorageView extends JPanel implements View {
     private void initListeners() {
         savedShowsComboBox.addActionListener(actionEvent -> {
             storagePresenter.onSavedSeriesSelected();
+        });
+        deleteSeries.addActionListener(actionEvent -> {
+            storagePresenter.onDeleteClick();
+        });
+        saveChanges.addActionListener(actionEvent -> {
+            storagePresenter.onSaveChangesClick();
         });
     }
     public void requestSavedSeries() {
@@ -44,6 +61,15 @@ public class StorageView extends JPanel implements View {
     }
     private void setupSavedSeriesPaneContentType() {
         savedSeriesPane.setContentType("text/html");
+    }
+    public Boolean isSelectedOption() {
+        return savedShowsComboBox.getSelectedIndex() > -1;
+    }
+    public String getSelectedSeriesContent() {
+        return savedSeriesPane.getText();
+    }
+    public void clearSavedSeriesContent() {
+        savedSeriesPane.setText("");
     }
 
 }
