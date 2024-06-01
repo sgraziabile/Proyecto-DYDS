@@ -2,6 +2,7 @@ package presenter;
 
 import model.DataBaseModel;
 import model.SaveSeriesModel;
+import model.listeners.SaveSeriesModelListener;
 import views.SearchView;
 
 public class SaveSeriesPresenter implements Presenter {
@@ -16,8 +17,12 @@ public class SaveSeriesPresenter implements Presenter {
         initListeners();
     }
     private void initListeners() {
-        saveSeriesModel.setListener(() -> {
-            storagePresenter.updateSavedSeriesContent();
+        saveSeriesModel.setListener(new SaveSeriesModelListener() {
+            @Override
+            public void saveSeriesHasFinished() {
+                clearSearchView();
+                storagePresenter.updateSavedSeriesContent();
+            }
         });
     }
     public void setSearchPresenter(SearchPresenter searchPresenter) {
@@ -42,6 +47,10 @@ public class SaveSeriesPresenter implements Presenter {
             saveSeriesModel.saveSeries(seriesTitle, seriesExctract);
         });
         taskThread.start();
+    }
+    private void clearSearchView() {
+        searchView.clearSearchField();
+        searchView.clearSelectedSeriesPane();
     }
 
 }

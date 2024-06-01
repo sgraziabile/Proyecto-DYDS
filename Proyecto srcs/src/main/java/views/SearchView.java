@@ -75,4 +75,10 @@ public class SearchView extends JPanel implements View {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(true);
         selectedSeriesPane.setEnabled(true);
     }
+    public void clearSelectedSeriesPane() {
+        selectedSeriesPane.setText("");
+    }
+    public void clearSearchField() {
+        searchTextField.setText("");
+    }
 }
