@@ -1,7 +1,7 @@
 package presenter;
 
 import model.*;
-import model.entities.HtmlHandler;
+import utils.HtmlHandler;
 import model.listeners.DeleteSeriesModelListener;
 import model.listeners.RetrieveSeriesModelListener;
 import model.listeners.SaveChangesModelListener;

@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.WikiPageModel;
 import model.WikiSearchModel;
-import model.entities.HtmlHandler;
+import utils.HtmlHandler;
 import model.entities.SearchResult;
 import model.listeners.WikiPageModelListener;
 import model.listeners.WikiSearchModelListener;

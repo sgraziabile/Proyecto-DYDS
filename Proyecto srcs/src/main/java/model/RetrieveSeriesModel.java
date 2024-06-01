@@ -1,6 +1,6 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import model.listeners.RetrieveSeriesModelListener;
 
 import java.util.ArrayList;
@@ -22,6 +22,6 @@ public class RetrieveSeriesModel implements Model {
         retrieveSeriesModelListener.retrieveSeriesHasFinished();
     }
     public ArrayList<String> getSavedSeriesTitles() {
-        return localDataBase.getTitles();
+        return localDataBase.getSavedSeriesTitles();
     }
 }

@@ -1,10 +1,11 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import presenter.SaveSeriesPresenter;
 import presenter.SearchPresenter;
 import presenter.StoragePresenter;
 import views.BaseView;
+import views.ScoreView;
 import views.SearchView;
 import views.StorageView;
 
@@ -48,6 +49,7 @@ public class Main {
         BaseView baseView = new BaseView();
         SearchView searchView = baseView.getSearchView();
         StorageView storageView = baseView.getStorageView();
+        ScoreView scoreView = baseView.getScoreView();
         searchView.setSearchPresenter(searchPresenter);
         searchView.setSaveSeriesPresenter(saveSeriesPresenter);
         storageView.setStoragePresenter(storagePresenter);
@@ -62,7 +64,7 @@ public class Main {
 
         DataBase localDataBase = new DataBase();
         localDataBase.loadDatabase();
-        localDataBase.saveInfo("test", "sarasa");
+        localDataBase.saveSeriesContent("test", "sarasa");
 
         storageView.requestSavedSeries();
     }

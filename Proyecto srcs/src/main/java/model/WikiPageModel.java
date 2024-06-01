@@ -1,6 +1,5 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
 import model.APIs.WikipediaPageAPI;
 import model.entities.SearchResult;
 import model.listeners.WikiPageModelListener;

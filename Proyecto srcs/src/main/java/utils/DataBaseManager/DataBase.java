@@ -1,4 +1,4 @@
-package dyds.tvseriesinfo.fulllogic;
+package utils.DataBaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class DataBase {
     }
   }
 
-  public static ArrayList<String> getTitles()
+  public static ArrayList<String> getSavedSeriesTitles()
   {
     ArrayList<String> titles = new ArrayList<>();
     Connection connection = null;
@@ -112,7 +112,7 @@ public class DataBase {
     }
   }
 
-  public static void saveInfo(String title, String extract)
+  public static void saveSeriesContent(String title, String extract)
   {
     Connection connection = null;
     try
@@ -146,7 +146,7 @@ public class DataBase {
     }
   }
 
-  public static String getExtract(String title)
+  public static String getSavedSeriesExctract(String title)
   {
 
     Connection connection = null;
@@ -183,7 +183,7 @@ public class DataBase {
     return null;
   }
 
-  public static void deleteEntry(String title)
+  public static void deleteSavedSeries(String title)
   {
 
     Connection connection = null;
@@ -217,6 +217,4 @@ public class DataBase {
       }
     }
   }
-
-
 }

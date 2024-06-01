@@ -14,12 +14,15 @@ public class SearchView extends JPanel implements View {
     private JTextPane selectedSeriesPane;
     private JButton saveLocallyButton;
     private JPanel searchPanel;
+    private JCheckBox scoreBox;
+    private JComboBox scoreComboBox;
     private JPopupMenu searchOptionsMenu;
     private SearchPresenter searchPresenter;
     private SaveSeriesPresenter saveSeriesPresenter;
 
     public SearchView() {
         showView();
+        initScoreSettings();
         initListeners();
     }
     public void showView() {
@@ -31,6 +34,14 @@ public class SearchView extends JPanel implements View {
         });
         saveLocallyButton.addActionListener(actionEvent -> {
             saveSeriesPresenter.onSavedLocallyButtonClicked();
+        });
+    }
+    private void initScoreSettings(){
+        Integer scores[] = {1,2,3,4,5,6,7,8,9,10};
+        scoreComboBox.setModel(new DefaultComboBoxModel(scores));
+        scoreComboBox.setEnabled(false);
+        scoreBox.addActionListener(actionEvent -> {
+            scoreComboBox.setEnabled(scoreBox.isSelected());
         });
     }
     public JPanel getContent() {
@@ -65,6 +76,7 @@ public class SearchView extends JPanel implements View {
     }
     private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
+        selectedSeriesPane.setEditable(false);
     }
 
     public void setWorkingStatus() {

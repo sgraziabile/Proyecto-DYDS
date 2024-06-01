@@ -1,4 +1,4 @@
-package model.entities;
+package utils;
 
 public class HtmlHandler {
     public static String textToHtml(String text) {

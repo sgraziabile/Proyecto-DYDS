@@ -10,6 +10,8 @@ public class BaseView implements View {
     private JPanel mainPanel;
     private StorageView storageView;
     private SearchView searchView;
+    private ScoreView scoreView;
+    private JPanel scorePanel;
 
     public BaseView() {
 
@@ -34,11 +36,12 @@ public class BaseView implements View {
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
     }
+    public void setScoreView(ScoreView scoreView) { this.scoreView = scoreView; }
     public SearchView getSearchView() {
         return searchView;
     }
     public StorageView getStorageView() {
         return storageView;
     }
-
+    public ScoreView getScoreView() { return scoreView; }
 }

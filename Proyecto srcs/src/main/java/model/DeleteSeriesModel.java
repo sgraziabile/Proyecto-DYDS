@@ -1,6 +1,6 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import model.listeners.DeleteSeriesModelListener;
 
 public class DeleteSeriesModel implements Model{
@@ -14,7 +14,7 @@ public class DeleteSeriesModel implements Model{
         this.deleteSeriesModelListener = deleteSeriesModelListener;
     }
     public void deleteSeries(String seriesTitle) {
-        localDataBase.deleteEntry(seriesTitle);
+        localDataBase.deleteSavedSeries(seriesTitle);
         deleteSeriesModelListener.deleteSeriesHasFinished();
 
     }

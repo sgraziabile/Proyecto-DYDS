@@ -1,6 +1,6 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import model.listeners.SeriesContentModelListener;
 
 public class SeriesContentModel implements Model{
@@ -15,7 +15,7 @@ public class SeriesContentModel implements Model{
         this.seriesContentModelListener = seriesContentModelListener;
     }
     public void showSeriesContent(String seriesTitle) {
-        lastSeriesContent = localDataBase.getExtract(seriesTitle);
+        lastSeriesContent = localDataBase.getSavedSeriesExctract(seriesTitle);
         seriesContentModelListener.showSeriesContentHasFinished();
     }
     public String getLastSeriesContent() {

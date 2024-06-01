@@ -19,6 +19,7 @@ import model.entities.SearchResult;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import utils.DataBaseManager.DataBase;
 
 public class MainWindow {
   private JTextField searchTextField;  //searchView
@@ -49,7 +50,7 @@ public class MainWindow {
     WikipediaSearchAPI searchAPI = retrofit.create(WikipediaSearchAPI.class);
     WikipediaPageAPI pageAPI = retrofit.create(WikipediaPageAPI.class);
 
-    savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getTitles().stream().sorted().toArray()));
+    savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getSavedSeriesTitles().stream().sorted().toArray()));
 
 
     selectedSeriesPane.setContentType("text/html");
@@ -150,20 +151,20 @@ public class MainWindow {
     saveLocallyButton.addActionListener(actionEvent -> {
       if(text != ""){
         // save to DB  <o/
-        DataBase.saveInfo(selectedResultTitle.replace("'", "`"), text);  //Dont forget the ' sql problem
-        savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getTitles().stream().sorted().toArray()));
+        DataBase.saveSeriesContent(selectedResultTitle.replace("'", "`"), text);  //Dont forget the ' sql problem
+        savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getSavedSeriesTitles().stream().sorted().toArray()));
       }
     });
     //mostrar info de serie guardada
-    savedShowsComboBox.addActionListener(actionEvent -> savedSeriesPane.setText(textToHtml(DataBase.getExtract(savedShowsComboBox.getSelectedItem().toString()))));
+    savedShowsComboBox.addActionListener(actionEvent -> savedSeriesPane.setText(textToHtml(DataBase.getSavedSeriesExctract(savedShowsComboBox.getSelectedItem().toString()))));
 
     JPopupMenu storedInfoPopup = new JPopupMenu();
     //Stored Info
     JMenuItem deleteItem = new JMenuItem("Delete!");
     deleteItem.addActionListener(actionEvent -> {
         if(savedShowsComboBox.getSelectedIndex() > -1){
-          DataBase.deleteEntry(savedShowsComboBox.getSelectedItem().toString());
-          savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getTitles().stream().sorted().toArray()));
+          DataBase.deleteSavedSeries(savedShowsComboBox.getSelectedItem().toString());
+          savedShowsComboBox.setModel(new DefaultComboBoxModel(DataBase.getSavedSeriesTitles().stream().sorted().toArray()));
           savedSeriesPane.setText("");
         }
     });
@@ -172,7 +173,7 @@ public class MainWindow {
     JMenuItem saveItem = new JMenuItem("Save Changes!");
     saveItem.addActionListener(actionEvent -> {
         // save to DB  <o/
-        DataBase.saveInfo(savedShowsComboBox.getSelectedItem().toString().replace("'", "`"), savedSeriesPane.getText());  //Dont forget the ' sql problem
+        DataBase.saveSeriesContent(savedShowsComboBox.getSelectedItem().toString().replace("'", "`"), savedSeriesPane.getText());  //Dont forget the ' sql problem
         //comboBox1.setModel(new DefaultComboBoxModel(DataBase.getTitles().stream().sorted().toArray()));
     });
     storedInfoPopup.add(saveItem);

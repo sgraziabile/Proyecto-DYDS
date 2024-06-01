@@ -1,6 +1,6 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import model.listeners.SaveSeriesModelListener;
 
 public class SaveSeriesModel {
@@ -14,7 +14,7 @@ public class SaveSeriesModel {
         this.saveSeriesModelListener = saveSeriesModelListener;
     }
     public void saveSeries(String seriesTitle, String seriesExctract) {
-        DataBase.saveInfo(seriesTitle.replace("'", "`"),seriesExctract );
+        DataBase.saveSeriesContent(seriesTitle.replace("'", "`"),seriesExctract );
         saveSeriesModelListener.saveSeriesHasFinished();
     }
 }

@@ -1,8 +1,7 @@
 package model;
 
-import dyds.tvseriesinfo.fulllogic.DataBase;
+import utils.DataBaseManager.DataBase;
 import model.listeners.SaveChangesModelListener;
-import model.listeners.SaveSeriesModelListener;
 
 public class SaveChangesModel implements Model{
     private SaveChangesModelListener saveChangesModelListener;
@@ -15,7 +14,7 @@ public class SaveChangesModel implements Model{
         this.saveChangesModelListener = saveChangesModelListener;
     }
     public void saveChanges(String selectedSeriesTitle, String modifiedExtract) {
-        localDataBase.saveInfo(selectedSeriesTitle, modifiedExtract);
+        localDataBase.saveSeriesContent(selectedSeriesTitle, modifiedExtract);
         saveChangesModelListener.saveChangesHasFinished();
     }
 }
