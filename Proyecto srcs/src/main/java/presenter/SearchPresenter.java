@@ -102,7 +102,6 @@ public class SearchPresenter implements Presenter{
             int seriesScore = Integer.parseInt(searchModel.getSeriesScore(searchResultTitle));
             Series series = new Series(searchResultTitle, searchResultPageId, searchResultSnippet);
             series.setScore(seriesScore);
-            System.out.println(series.isRated());
             addSeriesToSearchOptionsMenu(series);
         }
         searchView.showSearchOptionsMenu();
@@ -136,7 +135,6 @@ public class SearchPresenter implements Presenter{
         }
     }
     private void addSeriesToSearchOptionsMenu(Series series) {
-        System.out.println(series.isRated());
         if(series.isRated()) {
             series.setIcon(new ImageIcon("rated_icon.png"));
         }

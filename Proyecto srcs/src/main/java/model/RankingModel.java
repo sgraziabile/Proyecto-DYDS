@@ -17,9 +17,6 @@ public class RankingModel implements Model{
         lastUpdatedRanking = localDataBase.getRankedSeries();
         rankingModelListener.rankingHasChanged();
     }
-    private void sortRanking() {
-        //sort table
-    }
     public String getLastUpdatedRanking() {
         return lastUpdatedRanking;
     }

@@ -73,5 +73,6 @@ public class Main {
         DataBase localDataBase = new DataBase();
         localDataBase.loadDatabase();
         storageView.requestSavedSeries();
+        scoreView.showSeriesRanking();
     }
 }

@@ -25,7 +25,7 @@ public class RankingPresenter {
             }
         });
     }
-    public void onSeriesRankingComboBoxClicked() {
+    public void requestSeriesRanking() {
         taskThread = new Thread(() -> {
             rankingModel.updateRanking();
         });
