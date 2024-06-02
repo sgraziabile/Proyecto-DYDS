@@ -13,15 +13,11 @@ public class DataBase {
       if (connection != null) {
 
         DatabaseMetaData meta = connection.getMetaData();
-        System.out.println("The driver name is " + meta.getDriverName());
-        //System.out.println("A new database has been created.");
 
         Statement statement = connection.createStatement();
         statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-        //statement.executeUpdate("create table catalog (id INTEGER PRIMARY KEY AUTOINCREMENT, title string, extract string, source integer)");
-        statement.executeUpdate("create table catalog (id INTEGER, title string PRIMARY KEY, extract string, source integer)");
-        //If the DB was created before, a SQL error is reported but it is not harmfull...
+        statement.executeUpdate("create table if not exists catalog (id INTEGER, title string PRIMARY KEY, extract string, source integer)");
+        statement.executeUpdate("create table if not exists ranking(title string PRIMARY KEY, score integer, lastUpdate date)");
       }
 
     } catch (SQLException e) {
@@ -202,6 +198,65 @@ public class DataBase {
       // if the error message is "out of memory",
       // it probably means no database file is found
       System.err.println("Get title error " + e.getMessage());
+    }
+    finally {
+      try {
+        if(connection != null)
+          connection.close();
+      }
+      catch(SQLException e) {
+        // connection close failed.
+        System.err.println(e);
+      }
+    }
+  }
+  public static void updateSeriesScore(String title, String score) {
+    Connection connection = null;
+    try {
+      // create a database connection
+      connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
+      Statement statement = connection.createStatement();
+      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+      statement.executeUpdate("replace into ranking values('"+ title + "', "+ score + ", date('now'))");
+    }
+    catch(SQLException e) {
+      System.err.println("Error saving " + e.getMessage());
+    }
+    finally {
+      try {
+        if(connection != null)
+          connection.close();
+      }
+      catch(SQLException e) {
+        // connection close failed.
+        System.err.println( e);
+      }
+    }
+  }
+  public static void testRanking() {
+    Connection connection = null;
+    try
+    {
+      // create a database connection
+      connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
+      Statement statement = connection.createStatement();
+      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+      ResultSet rs = statement.executeQuery("select * from ranking");
+      while(rs.next())
+      {
+        // read the result set
+        System.out.println("title = " + rs.getString("title"));
+        System.out.println("score = " + rs.getInt("score"));
+        System.out.println("lastUpdate = " + rs.getString("lastUpdate"));
+      }
+    }
+    catch(SQLException e)
+    {
+      // if the error message is "out of memory",
+      // it probably means no database file is found
+      System.err.println(e.getMessage());
     }
     finally
     {

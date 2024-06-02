@@ -14,14 +14,11 @@ public class StoragePresenter implements Presenter{
 
     private StorageView storageView;
     private Thread taskThread;
-    private DataBaseModel dataBaseModel;
     private SaveChangesModel saveChangesModel;
     private DeleteSeriesModel deleteSeriesModel;
     private RetrieveSeriesModel retrieveSeriesModel;
     private SeriesContentModel seriesContentModel;
     private HtmlHandler htmlHandler;
-
-
 
     public StoragePresenter(RetrieveSeriesModel retrieveSeriesModel, SaveChangesModel saveChangesModel, DeleteSeriesModel deleteSeriesModel, SeriesContentModel seriesContentModel) {
         this.retrieveSeriesModel = retrieveSeriesModel;
@@ -56,9 +53,6 @@ public class StoragePresenter implements Presenter{
                 //mostrar una ventana de que se guardó correctamente
             }
         });
-    }
-    public void setDataBaseModel(DataBaseModel dataBaseModel) {
-        this.dataBaseModel = dataBaseModel;
     }
     public void setSaveChangesModel(SaveChangesModel saveChangesModel) {
         this.saveChangesModel = saveChangesModel;

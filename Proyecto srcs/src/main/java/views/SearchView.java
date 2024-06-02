@@ -16,6 +16,7 @@ public class SearchView extends JPanel implements View {
     private JPanel searchPanel;
     private JCheckBox scoreBox;
     private JComboBox scoreComboBox;
+    private JButton updateScoreButton;
     private JPopupMenu searchOptionsMenu;
     private SearchPresenter searchPresenter;
     private SaveSeriesPresenter saveSeriesPresenter;

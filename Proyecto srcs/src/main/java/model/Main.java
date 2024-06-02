@@ -1,9 +1,7 @@
 package model;
 
+import presenter.*;
 import utils.DataBaseManager.DataBase;
-import presenter.SaveSeriesPresenter;
-import presenter.SearchPresenter;
-import presenter.StoragePresenter;
 import views.BaseView;
 import views.ScoreView;
 import views.SearchView;
@@ -36,13 +34,15 @@ public class Main {
         DeleteSeriesModel deleteSeriesModel = new DeleteSeriesModel();
         SaveSeriesModel saveSeriesModel = new SaveSeriesModel();
         SeriesContentModel seriesContentModel = new SeriesContentModel();
-        DataBaseModel dataBaseModel = new DataBaseModel();
+        ScoreModel scoreModel = new ScoreModel();
+        RankingModel rankingModel = new RankingModel();
 
         SearchPresenter searchPresenter = new SearchPresenter(wikiSearchModel,wikiPageModel);
         SaveSeriesPresenter saveSeriesPresenter = new SaveSeriesPresenter(saveSeriesModel);
         StoragePresenter storagePresenter = new StoragePresenter(retrieveSeriesModel, saveChangesModel, deleteSeriesModel, seriesContentModel);
+        ScorePresenter scorePresenter = new ScorePresenter(scoreModel);
+        RankingPresenter rankingPresenter = new RankingPresenter(rankingModel);
 
-        storagePresenter.setDataBaseModel(dataBaseModel);
         storagePresenter.setSaveChangesModel(saveChangesModel);
         storagePresenter.setDeleteSeriesModel(deleteSeriesModel);
 
@@ -60,11 +60,15 @@ public class Main {
         saveSeriesPresenter.setSearchPresenter(searchPresenter);
         saveSeriesPresenter.setStoragePresenter(storagePresenter);
 
+        scorePresenter.setSearchView(searchView);
+        scorePresenter.setRankingPresenter(rankingPresenter);
+
+
         storagePresenter.setStorageView(storageView);
 
         DataBase localDataBase = new DataBase();
         localDataBase.loadDatabase();
-        localDataBase.saveSeriesContent("test", "sarasa");
+
 
         storageView.requestSavedSeries();
     }
