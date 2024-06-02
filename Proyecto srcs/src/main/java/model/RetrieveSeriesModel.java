@@ -17,7 +17,6 @@ public class RetrieveSeriesModel implements Model {
         this.retrieveSeriesModelListener = retrieveSeriesModelListener;
     }
     public void getSavedSeries() {
-        System.out.print("Getting saved series");
         savedSeriesTitles = getSavedSeriesTitles();
         retrieveSeriesModelListener.retrieveSeriesHasFinished();
     }

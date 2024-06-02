@@ -233,6 +233,7 @@ public class DataBase {
         System.err.println( e);
       }
     }
+    testRanking();
   }
   public static void testRanking() {
     Connection connection = null;

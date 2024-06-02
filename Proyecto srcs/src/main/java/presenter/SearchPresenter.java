@@ -126,6 +126,7 @@ public class SearchPresenter implements Presenter{
                 retrievedSeriesExtract = htmlHandler.textToHtml(retrievedSeriesExtract);
                 searchView.showSelectedSeries(retrievedSeriesExtract);
                 searchView.setWaitingStatus();
+                searchView.allowScoreUpdate();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

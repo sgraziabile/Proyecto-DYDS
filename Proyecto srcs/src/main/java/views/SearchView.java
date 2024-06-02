@@ -2,6 +2,7 @@ package views;
 
 import model.entities.SearchResult;
 import presenter.SaveSeriesPresenter;
+import presenter.ScorePresenter;
 import presenter.SearchPresenter;
 
 import javax.swing.*;
@@ -14,12 +15,12 @@ public class SearchView extends JPanel implements View {
     private JTextPane selectedSeriesPane;
     private JButton saveLocallyButton;
     private JPanel searchPanel;
-    private JCheckBox scoreBox;
     private JComboBox scoreComboBox;
     private JButton updateScoreButton;
     private JPopupMenu searchOptionsMenu;
     private SearchPresenter searchPresenter;
     private SaveSeriesPresenter saveSeriesPresenter;
+    private ScorePresenter scorePresenter;
 
     public SearchView() {
         showView();
@@ -36,14 +37,15 @@ public class SearchView extends JPanel implements View {
         saveLocallyButton.addActionListener(actionEvent -> {
             saveSeriesPresenter.onSavedLocallyButtonClicked();
         });
+        updateScoreButton.addActionListener(actionEvent -> {
+            scorePresenter.onUpdateScoreButtonClicked();
+        });
     }
     private void initScoreSettings(){
         Integer scores[] = {1,2,3,4,5,6,7,8,9,10};
         scoreComboBox.setModel(new DefaultComboBoxModel(scores));
         scoreComboBox.setEnabled(false);
-        scoreBox.addActionListener(actionEvent -> {
-            scoreComboBox.setEnabled(scoreBox.isSelected());
-        });
+        updateScoreButton.setEnabled(false);
     }
     public JPanel getContent() {
         return this.getContent();
@@ -51,9 +53,8 @@ public class SearchView extends JPanel implements View {
     public void setSearchPresenter(SearchPresenter searchPresenter) {
         this.searchPresenter = searchPresenter;
     }
-    public void setSaveSeriesPresenter(SaveSeriesPresenter saveSeriesPresenter) {
-        this.saveSeriesPresenter = saveSeriesPresenter;
-    }
+    public void setSaveSeriesPresenter(SaveSeriesPresenter saveSeriesPresenter) {this.saveSeriesPresenter = saveSeriesPresenter;}
+    public void setScorePresenter(ScorePresenter scorePresenter) {this.scorePresenter = scorePresenter;}
     public String getSearchFieldText() {
         return searchTextField.getText();
     }
@@ -75,6 +76,7 @@ public class SearchView extends JPanel implements View {
     public String getSelectedSeriesPaneText() {
         return selectedSeriesPane.getText();
     }
+    public String getScore() { return scoreComboBox.getSelectedItem().toString();}
     private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
         selectedSeriesPane.setEditable(false);
@@ -86,7 +88,13 @@ public class SearchView extends JPanel implements View {
     }
     public void setWaitingStatus() {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(true);
+        scoreComboBox.setEnabled(false);
+        updateScoreButton.setEnabled(false);
         selectedSeriesPane.setEnabled(true);
+    }
+    public void allowScoreUpdate() {
+        scoreComboBox.setEnabled(true);
+        updateScoreButton.setEnabled(true);
     }
     public void clearSelectedSeriesPane() {
         selectedSeriesPane.setText("");

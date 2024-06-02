@@ -9,6 +9,7 @@ public class ScorePresenter implements Presenter{
     private ScoreModel scoreModel;
     private SearchView searchView;
     private RankingPresenter rankingPresenter;
+    private SearchPresenter searchPresenter;
     private Thread taskThread;
     private HtmlHandler htmlHandler;
 
@@ -25,14 +26,21 @@ public class ScorePresenter implements Presenter{
             }
         });
     }
-    public void setScoreModel(ScoreModel scoreModel) {
-        this.scoreModel = scoreModel;
+    public void setScoreModel(ScoreModel scoreModel) {this.scoreModel = scoreModel;}
+    public void setSearchView(SearchView searchView) {this.searchView = searchView;}
+    public void setRankingPresenter(RankingPresenter rankingPresenter) {this.rankingPresenter = rankingPresenter;}
+    public void setSearchPresenter(SearchPresenter searchPresenter) {this.searchPresenter = searchPresenter;}
+    public void onUpdateScoreButtonClicked() {
+        searchView.setWaitingStatus();
+        requestUpdateScore();
     }
-    public void setSearchView(SearchView searchView) {
-        this.searchView = searchView;
-    }
-    public void setRankingPresenter(RankingPresenter rankingPresenter) {
-        this.rankingPresenter = rankingPresenter;
+    private void requestUpdateScore(){
+        taskThread = new Thread(() -> {
+            String seriesTitle = searchPresenter.getLastSeriesTitle();
+            String seriesScore = searchView.getScore();
+            scoreModel.updateSeriesScore(seriesTitle, seriesScore);
+        });
+        taskThread.start();
     }
     private void showUpdatedRanking() {
         //llamar al rankingPresenter para que actualice la vista
