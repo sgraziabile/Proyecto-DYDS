@@ -1,7 +1,7 @@
 package model.listeners;
 
-import model.entities.SearchResult;
+import model.entities.Series;
 
 public interface WikiPageModelListener {
-    void seriesRetrieved(SearchResult searchResult);
+    void seriesRetrieved(Series series);
 }

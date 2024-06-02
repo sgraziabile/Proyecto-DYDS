@@ -21,9 +21,15 @@ public class RankingPresenter {
         rankingModel.setListener(new RankingModelListener() {
             @Override
             public void rankingHasChanged() {
-                //showUpdatedRanking();
+                showUpdatedRanking();
             }
         });
+    }
+    public void onSeriesRankingComboBoxClicked() {
+        taskThread = new Thread(() -> {
+            rankingModel.updateRanking();
+        });
+        taskThread.start();
     }
     public void setRankingModel(RankingModel rankingModel) {
         this.rankingModel = rankingModel;
@@ -32,7 +38,8 @@ public class RankingPresenter {
         this.scoreView = scoreView;
     }
     private void showUpdatedRanking() {
-        //
+        String ranking = htmlHandler.textToHtml(rankingModel.getLastUpdatedRanking());
+        scoreView.setRankingComboBox(ranking);
     }
 
 }

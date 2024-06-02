@@ -1,6 +1,6 @@
 package views;
 
-import model.entities.SearchResult;
+import model.entities.Series;
 import presenter.SaveSeriesPresenter;
 import presenter.ScorePresenter;
 import presenter.SearchPresenter;
@@ -61,9 +61,9 @@ public class SearchView extends JPanel implements View {
     public void setSearchOptionsMenu(JPopupMenu searchOptionsMenu) {
         this.searchOptionsMenu = searchOptionsMenu;
     }
-    public void initSearchOptionListener(SearchResult searchResult) {
-        searchResult.addActionListener(actionEvent -> {
-            searchPresenter.onSeriesMenuSelect(searchResult);
+    public void initSearchOptionListener(Series series) {
+        series.addActionListener(actionEvent -> {
+            searchPresenter.onSeriesMenuSelect(series);
         });
     }
     public void showSelectedSeries(String seriesExtract) {

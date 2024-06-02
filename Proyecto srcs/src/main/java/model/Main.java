@@ -54,6 +54,7 @@ public class Main {
         searchView.setSaveSeriesPresenter(saveSeriesPresenter);
         searchView.setScorePresenter(scorePresenter);
         storageView.setStoragePresenter(storagePresenter);
+        scoreView.setRankingPresenter(rankingPresenter);
         baseView.showView();
 
         searchPresenter.setSearchView(searchView);
@@ -64,14 +65,13 @@ public class Main {
         scorePresenter.setSearchView(searchView);
         scorePresenter.setRankingPresenter(rankingPresenter);
         scorePresenter.setSearchPresenter(searchPresenter);
+        rankingPresenter.setScoreView(scoreView);
 
 
         storagePresenter.setStorageView(storageView);
 
         DataBase localDataBase = new DataBase();
         localDataBase.loadDatabase();
-
-
         storageView.requestSavedSeries();
     }
 }

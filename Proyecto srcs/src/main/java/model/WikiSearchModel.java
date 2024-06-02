@@ -5,11 +5,15 @@ import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import utils.DataBaseManager.DataBase;
+
+import javax.xml.crypto.Data;
 
 public class WikiSearchModel implements Model{
     private WikipediaSearchAPI searchAPI;
     private WikiSearchModelListener searchModelListener;
     private Response<String> lastSearchResult;
+    private DataBase localDataBase;
 
     public WikiSearchModel() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -27,6 +31,9 @@ public class WikiSearchModel implements Model{
         }
         lastSearchResult = callForSearchResponse;
         notifySearchHasFinishedListener();
+    }
+    public String getSeriesScore(String title) {
+        return localDataBase.getSeriesScore(title);
     }
     public Response<String> getLastSearchResult() {
         return lastSearchResult;

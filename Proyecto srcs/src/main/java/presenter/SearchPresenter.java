@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import model.WikiPageModel;
 import model.WikiSearchModel;
 import utils.HtmlHandler;
-import model.entities.SearchResult;
+import model.entities.Series;
 import model.listeners.WikiPageModelListener;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
@@ -43,7 +43,7 @@ public class SearchPresenter implements Presenter{
         });
         pageModel.setListener(new WikiPageModelListener() {
             @Override
-            public void seriesRetrieved(SearchResult searchResult) {showRetrievedSeries(searchResult); }
+            public void seriesRetrieved(Series series) {showRetrievedSeries(series); }
         });
     }
     public void setSearchModel(WikiSearchModel searchModel) {
@@ -60,10 +60,10 @@ public class SearchPresenter implements Presenter{
         searchView.setWaitingStatus();
         requestSearch(searchView.getSearchFieldText());
     }
-    public void onSeriesMenuSelect(SearchResult searchResult) {
+    public void onSeriesMenuSelect(Series series) {
         try {
             searchView.setWorkingStatus();
-            requestRetrieveSeries(searchResult);
+            requestRetrieveSeries(series);
         }catch(Exception e) {
             System.out.println("It was not possible to retrieve series data.");
         }
@@ -74,7 +74,7 @@ public class SearchPresenter implements Presenter{
         });
         taskThread.start();
     }
-    private void requestRetrieveSeries(SearchResult selectedSeries) {
+    private void requestRetrieveSeries(Series selectedSeries) {
         taskThread = new Thread(() -> {
             pageModel.retrieveSeries(selectedSeries) ;
         });
@@ -99,12 +99,15 @@ public class SearchPresenter implements Presenter{
             String searchResultPageId = jsonSearchResult.get("pageid").getAsString();
             String searchResultSnippet = jsonSearchResult.get("snippet").getAsString();
 
-            SearchResult searchResult = new SearchResult(searchResultTitle, searchResultPageId, searchResultSnippet);
-            addSeriesToSearchOptionsMenu(searchResult);
+            int seriesScore = Integer.parseInt(searchModel.getSeriesScore(searchResultTitle));
+            Series series = new Series(searchResultTitle, searchResultPageId, searchResultSnippet);
+            series.setScore(seriesScore);
+            System.out.println(series.isRated());
+            addSeriesToSearchOptionsMenu(series);
         }
         searchView.showSearchOptionsMenu();
     }
-    private void showRetrievedSeries(SearchResult searchResult) {
+    private void showRetrievedSeries(Series series) {
         try {
             Response<String> lastRetrievedSeries = pageModel.getLastRetrievedSeries();
             String retrievedSeriesExtract = "";
@@ -120,8 +123,8 @@ public class SearchPresenter implements Presenter{
                 retrievedSeriesExtract = "No Results";
                 //generar ventana de error
             } else {
-                retrievedSeriesExtract = "<h1>" + searchResult.title + "</h1>";
-                lastSeriesTitle = searchResult.title;
+                retrievedSeriesExtract = "<h1>" + series.title + "</h1>";
+                lastSeriesTitle = series.title;
                 retrievedSeriesExtract += searchResultExtract2.getAsString().replace("\\n", "\n");
                 retrievedSeriesExtract = htmlHandler.textToHtml(retrievedSeriesExtract);
                 searchView.showSelectedSeries(retrievedSeriesExtract);
@@ -132,9 +135,13 @@ public class SearchPresenter implements Presenter{
             System.out.println(e.getMessage());
         }
     }
-    private void addSeriesToSearchOptionsMenu(SearchResult searchResult) {
-        searchOptionsMenu.add(searchResult);
-        searchView.initSearchOptionListener(searchResult);
+    private void addSeriesToSearchOptionsMenu(Series series) {
+        System.out.println(series.isRated());
+        if(series.isRated()) {
+            series.setIcon(new ImageIcon("rated_icon.png"));
+        }
+        searchOptionsMenu.add(series);
+        searchView.initSearchOptionListener(series);
     }
     public String getLastSeriesTitle() {
         return lastSeriesTitle;

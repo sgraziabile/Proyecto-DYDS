@@ -15,7 +15,7 @@ import javax.swing.*;
 
 import model.APIs.WikipediaPageAPI;
 import model.APIs.WikipediaSearchAPI;
-import model.entities.SearchResult;
+import model.entities.Series;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -100,7 +100,7 @@ public class MainWindow {
                   String searchResultPageId = searchResult.get("pageid").getAsString();
                   String searchResultSnippet = searchResult.get("snippet").getAsString();
 
-                  SearchResult sr = new SearchResult(searchResultTitle, searchResultPageId, searchResultSnippet);
+                  Series sr = new Series(searchResultTitle, searchResultPageId, searchResultSnippet);
                   searchOptionsMenu.add(sr);
 
                   //toAlberto: Adding an event to retrive the wikipage when the user clicks an item in the Popupmenu
