@@ -1,5 +1,7 @@
 package utils.DataBaseManager;
 
+import model.entities.RatedSeries;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -266,7 +268,7 @@ public class DataBase {
     }
     return null;
   }
-  public static String getRankedSeries() {
+  public static ArrayList<RatedSeries> getRankedSeries() {
     Connection connection = null;
     try {
       connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
@@ -275,10 +277,15 @@ public class DataBase {
 
       ResultSet rs = statement.executeQuery("select * from ranking ORDER BY score ASC");
       StringBuilder sb = new StringBuilder();
+      ArrayList<RatedSeries> ranking = new ArrayList<>();
       while(rs.next()) {
-        sb.append(rs.getString("title") + " " + rs.getString("score") + "\n");
+        String title = rs.getString("title");
+        String score = rs.getString("score");
+        String lastUpdate = rs.getString("lastUpdate");
+        RatedSeries ratedSeries = new RatedSeries(title, Integer.parseInt(score), lastUpdate);
+        ranking.add(ratedSeries);
       }
-      return sb.toString();
+      return ranking;
     }
     catch(SQLException e) {
       System.err.println("Get title error " + e.getMessage());

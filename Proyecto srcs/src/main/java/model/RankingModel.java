@@ -1,12 +1,16 @@
 package model;
 
+import model.entities.RatedSeries;
 import model.listeners.RankingModelListener;
 import utils.DataBaseManager.DataBase;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class RankingModel implements Model{
     private RankingModelListener rankingModelListener;
     private DataBase localDataBase;
-    private String lastUpdatedRanking;
+    private ArrayList<RatedSeries> lastUpdatedRanking;
 
     public RankingModel() {};
 
@@ -17,7 +21,7 @@ public class RankingModel implements Model{
         lastUpdatedRanking = localDataBase.getRankedSeries();
         rankingModelListener.rankingHasChanged();
     }
-    public String getLastUpdatedRanking() {
+    public ArrayList<RatedSeries> getLastUpdatedRanking() {
         return lastUpdatedRanking;
     }
 }

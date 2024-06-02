@@ -43,6 +43,6 @@ public class ScorePresenter implements Presenter{
         taskThread.start();
     }
     private void showUpdatedRanking() {
-        //llamar al rankingPresenter para que actualice la vista
+        rankingPresenter.requestSeriesRanking();
     }
 }

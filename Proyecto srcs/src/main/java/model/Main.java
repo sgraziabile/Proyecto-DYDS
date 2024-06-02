@@ -1,5 +1,6 @@
 package model;
 
+import model.entities.RatedSeries;
 import presenter.*;
 import utils.DataBaseManager.DataBase;
 import views.BaseView;
@@ -9,6 +10,7 @@ import views.StorageView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {

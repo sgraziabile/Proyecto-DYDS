@@ -2,9 +2,12 @@ package presenter;
 
 import model.RankingModel;
 import model.ScoreModel;
+import model.entities.RatedSeries;
 import model.listeners.RankingModelListener;
 import utils.HtmlHandler;
 import views.ScoreView;
+
+import java.util.ArrayList;
 
 public class RankingPresenter {
     private RankingModel rankingModel;
@@ -38,8 +41,11 @@ public class RankingPresenter {
         this.scoreView = scoreView;
     }
     private void showUpdatedRanking() {
-        String ranking = htmlHandler.textToHtml(rankingModel.getLastUpdatedRanking());
-        scoreView.setRankingComboBox(ranking);
+        scoreView.clearRankingList();
+        ArrayList<RatedSeries> rankingList = rankingModel.getLastUpdatedRanking();
+        for (RatedSeries series : rankingList) {
+            scoreView.addSeriesToRanking(series);
+        }
     }
 
 }

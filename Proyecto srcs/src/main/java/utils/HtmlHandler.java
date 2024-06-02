@@ -16,4 +16,7 @@ public class HtmlHandler {
 
         return builder.toString();
     }
+    public static String formatToHtml(String text) {
+        return "<html>" + text + "</html>";
+    }
 }
