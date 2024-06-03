@@ -38,12 +38,13 @@ public class Main {
         SeriesContentModel seriesContentModel = new SeriesContentModel();
         ScoreModel scoreModel = new ScoreModel();
         RankingModel rankingModel = new RankingModel();
+        SearchRankingModel searchRankingModel = new SearchRankingModel();
 
         SearchPresenter searchPresenter = new SearchPresenter(wikiSearchModel,wikiPageModel);
         SaveSeriesPresenter saveSeriesPresenter = new SaveSeriesPresenter(saveSeriesModel);
         StoragePresenter storagePresenter = new StoragePresenter(retrieveSeriesModel, saveChangesModel, deleteSeriesModel, seriesContentModel);
         ScorePresenter scorePresenter = new ScorePresenter(scoreModel);
-        RankingPresenter rankingPresenter = new RankingPresenter(rankingModel);
+        RankingPresenter rankingPresenter = new RankingPresenter(rankingModel,searchRankingModel);
 
         storagePresenter.setSaveChangesModel(saveChangesModel);
         storagePresenter.setDeleteSeriesModel(deleteSeriesModel);

@@ -1,26 +1,17 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import model.APIs.WikipediaSearchAPI;
-import model.listeners.WikiSearchModelListener;
+import model.listeners.SearchRankingModelListener;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import utils.DataBaseManager.DataBase;
 
-import javax.xml.crypto.Data;
-import java.util.Iterator;
-
-public class WikiSearchModel implements Model{
+public class SearchRankingModel {
     private WikipediaSearchAPI searchAPI;
-    private WikiSearchModelListener searchModelListener;
+    private SearchRankingModelListener searchRankingModelListener;
     private Response<String> lastSearchResult;
-    private DataBase localDataBase;
 
-    public WikiSearchModel() {
+    public SearchRankingModel() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://en.wikipedia.org/w/")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -35,19 +26,13 @@ public class WikiSearchModel implements Model{
             System.out.println("No result found for term."); //crear una ventana que avise del error
         }
         lastSearchResult = callForSearchResponse;
-        notifySearchHasFinishedListener();
+        notifySearchFromRankingHasFinishedListener();
     }
-    public String getSeriesScore(String title) {
-        return localDataBase.getSeriesScore(title);
+    public void setListener(SearchRankingModelListener searchRankingModelListener) {
+        this.searchRankingModelListener = searchRankingModelListener;
     }
-    public Response<String> getLastSearchResult() {
-        return lastSearchResult;
+    private void notifySearchFromRankingHasFinishedListener() {
+        searchRankingModelListener.searchFromRankingHasFinished();
     }
-    private void notifySearchHasFinishedListener() {
-        searchModelListener.searchHasFinished();
-    }
-    public void setListener(WikiSearchModelListener searchModelListener) {
-        this.searchModelListener = searchModelListener;
-    }
-
+    public Response<String> getLastSearchResult() {return lastSearchResult;}
 }

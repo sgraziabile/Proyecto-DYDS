@@ -61,7 +61,7 @@ public class SearchPresenter implements Presenter{
 
     public void onSearchButtonClicked() {
         searchView.setWaitingStatus();
-        requestSearch(searchView.getSearchFieldText());
+        requestSearch(searchView.getSearchFieldText(),5);
     }
     public void onSeriesMenuSelect(Series series) {
         try {
@@ -71,13 +71,23 @@ public class SearchPresenter implements Presenter{
             System.out.println("It was not possible to retrieve series data.");
         }
     }
-    public void searchSeriesFromRanking(String seriesTitle) {
-        searchView.setWaitingStatus();
-        requestSearch(seriesTitle);
+    public void findRankingSeriesID(String seriesTitle, Response<String> lastSearchResult) {
+        JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
+        for (JsonElement jasonResult : jsonResults) {
+            Series series = jsonParser.buildSeriesFromJson(jasonResult);
+            if(series.getTitle().equals(seriesTitle)) {
+                requestRetrieveSeries(series);
+                break;
+            }
+        }
     }
-    private void requestSearch(String termToSearch) {
+    public void findSeriesID(String seriesTitle) {
+        searchView.setWaitingStatus();
+        requestSearch(seriesTitle,1);
+    }
+    private void requestSearch(String termToSearch, int limit) {
         taskThread = new Thread(() -> {
-            searchModel.searchTerm(termToSearch);
+            searchModel.searchTerm(termToSearch,limit);
         });
         taskThread.start();
     }
@@ -105,14 +115,7 @@ public class SearchPresenter implements Presenter{
         try {
             Response<String> lastRetrievedSeries = pageModel.getLastRetrievedSeries();
             String retrievedSeriesExtract = "";
-            Gson gson = new Gson();
-            JsonObject jobj2 = gson.fromJson(lastRetrievedSeries.body(), JsonObject.class);
-            JsonObject query2 = jobj2.get("query").getAsJsonObject();
-            JsonObject pages = query2.get("pages").getAsJsonObject();
-            Set<Map.Entry<String, JsonElement>> pagesSet = pages.entrySet();
-            Map.Entry<String, JsonElement> first = pagesSet.iterator().next();
-            JsonObject page = first.getValue().getAsJsonObject();
-            JsonElement searchResultExtract2 = page.get("extract");
+            JsonElement searchResultExtract2 = jsonParser.getSearchResultExctract(lastRetrievedSeries);
             if (searchResultExtract2 == null) {
                 retrievedSeriesExtract = "No Results";
                 //generar ventana de error

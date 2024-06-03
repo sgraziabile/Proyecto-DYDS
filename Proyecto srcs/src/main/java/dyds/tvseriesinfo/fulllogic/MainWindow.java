@@ -75,7 +75,7 @@ public class MainWindow {
               Response<String> callForSearchResponse;
               try {
                 //ToAlberto: First, lets search for the term in Wikipedia
-                callForSearchResponse = searchAPI.searchForTerm(searchTextField.getText() + " (Tv series) articletopic:\"television\"").execute();
+                callForSearchResponse = searchAPI.searchForTerm(searchTextField.getText() + " (Tv series) articletopic:\"television\"",5).execute();
 
                 //Show the result for testing reasons, if it works, dont forget to delete!
                 System.out.println("JSON " + callForSearchResponse.body());
