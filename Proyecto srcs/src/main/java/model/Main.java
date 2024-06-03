@@ -52,6 +52,7 @@ public class Main {
         SearchView searchView = baseView.getSearchView();
         StorageView storageView = baseView.getStorageView();
         ScoreView scoreView = baseView.getScoreView();
+        scoreView.setBaseView(baseView);
         searchView.setSearchPresenter(searchPresenter);
         searchView.setSaveSeriesPresenter(saveSeriesPresenter);
         searchView.setScorePresenter(scorePresenter);
@@ -68,6 +69,7 @@ public class Main {
         scorePresenter.setRankingPresenter(rankingPresenter);
         scorePresenter.setSearchPresenter(searchPresenter);
         rankingPresenter.setScoreView(scoreView);
+        rankingPresenter.setSearchPresenter(searchPresenter);
 
 
         storagePresenter.setStorageView(storageView);

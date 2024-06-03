@@ -44,4 +44,5 @@ public class BaseView implements View {
         return storageView;
     }
     public ScoreView getScoreView() { return scoreView; }
+    public JTabbedPane getOptionsPanel() {return optionsPanel;}
 }

@@ -68,6 +68,10 @@ public class SearchPresenter implements Presenter{
             System.out.println("It was not possible to retrieve series data.");
         }
     }
+    public void searchSeriesFromRanking(String seriesTitle) {
+        searchView.setWaitingStatus();
+        requestSearch(seriesTitle);
+    }
     private void requestSearch(String termToSearch) {
         taskThread = new Thread(() -> {
             searchModel.searchTerm(termToSearch);

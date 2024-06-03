@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class RankingPresenter {
     private RankingModel rankingModel;
     private ScoreView scoreView;
+    private SearchPresenter searchPresenter;
     private Thread taskThread;
     private HtmlHandler htmlHandler;
 
@@ -37,6 +38,7 @@ public class RankingPresenter {
     public void setRankingModel(RankingModel rankingModel) {
         this.rankingModel = rankingModel;
     }
+    public void setSearchPresenter(SearchPresenter searchPresenter) {this.searchPresenter = searchPresenter;}
     public void setScoreView(ScoreView scoreView) {
         this.scoreView = scoreView;
     }
@@ -45,6 +47,13 @@ public class RankingPresenter {
         ArrayList<RatedSeries> rankingList = rankingModel.getLastUpdatedRanking();
         for (RatedSeries series : rankingList) {
             scoreView.addSeriesToRanking(series);
+        }
+    }
+    public void onRankingSeriesSelected() {
+        String selectedSeriesTitle = "";
+        if(!scoreView.isSelectionEmpty()) {
+            selectedSeriesTitle = scoreView.getSelectedSeriesTitle();
+            searchPresenter.searchSeriesFromRanking(selectedSeriesTitle);
         }
     }
 
