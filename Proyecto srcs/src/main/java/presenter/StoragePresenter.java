@@ -25,7 +25,6 @@ public class StoragePresenter implements Presenter{
         this.saveChangesModel = saveChangesModel;
         this.deleteSeriesModel = deleteSeriesModel;
         this.seriesContentModel = seriesContentModel;
-        this.htmlHandler = htmlHandler; //podria hacerse singleton
         initListeners();
     }
     private void initListeners() {
@@ -45,12 +44,13 @@ public class StoragePresenter implements Presenter{
             @Override
             public void deleteSeriesHasFinished() {
                 updateSavedSeriesContent();
+                storageView.showEventNotifier("Series deleted successfully!");
             }
         });
         saveChangesModel.setListener(new SaveChangesModelListener() {
             @Override
             public void saveChangesHasFinished() {
-                //mostrar una ventana de que se guardó correctamente
+                storageView.showEventNotifier("Changes saved successfully!");
             }
         });
     }

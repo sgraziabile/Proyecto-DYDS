@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.WikiPageModel;
 import model.WikiSearchModel;
+import model.listeners.SearchRankingModelListener;
 import utils.HtmlHandler;
 import model.entities.Series;
 import model.listeners.WikiPageModelListener;
@@ -60,36 +61,45 @@ public class SearchPresenter implements Presenter{
     }
 
     public void onSearchButtonClicked() {
-        searchView.setWaitingStatus();
-        requestSearch(searchView.getSearchFieldText(),5);
+        try {
+            searchView.setWaitingStatus();
+            requestSearch(searchView.getSearchFieldText(), 5);
+        }catch(Exception exception) {
+            notifySearchError();
+        }
     }
     public void onSeriesMenuSelect(Series series) {
-        try {
-            searchView.setWorkingStatus();
-            requestRetrieveSeries(series);
-        }catch(Exception e) {
-            System.out.println("It was not possible to retrieve series data.");
-        }
+        searchView.setWorkingStatus();
+        requestRetrieveSeries(series);
     }
     public void findRankingSeriesID(String seriesTitle, Response<String> lastSearchResult) {
-        JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
-        for (JsonElement jasonResult : jsonResults) {
-            Series series = jsonParser.buildSeriesFromJson(jasonResult);
-            if(series.getTitle().equals(seriesTitle)) {
-                requestRetrieveSeries(series);
-                break;
-            }
+        try {
+            JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
+            for (JsonElement jasonResult : jsonResults) {
+                Series series = jsonParser.buildSeriesFromJson(jasonResult);
+                if (series.getTitle().equals(seriesTitle)) {
+                    requestRetrieveSeries(series);
+                    break;
+                    }
+                }
+        }catch(Exception e) {
+            notifySearchError();
         }
     }
-    public void findSeriesID(String seriesTitle) {
-        searchView.setWaitingStatus();
-        requestSearch(seriesTitle,1);
-    }
-    private void requestSearch(String termToSearch, int limit) {
-        taskThread = new Thread(() -> {
-            searchModel.searchTerm(termToSearch,limit);
-        });
-        taskThread.start();
+
+    private void requestSearch(String termToSearch, int limit) throws Exception {
+        try {
+            taskThread = new Thread(() -> {
+                try {
+                    searchModel.searchTerm(termToSearch, limit);
+                } catch (Exception e) {
+                    notifySearchError();
+                }
+            });
+            taskThread.start();
+        }catch(Exception e) {
+            throw new Exception();
+        }
     }
     private void requestRetrieveSeries(Series selectedSeries) {
         taskThread = new Thread(() -> {
@@ -102,12 +112,15 @@ public class SearchPresenter implements Presenter{
         JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
         this.searchOptionsMenu = new JPopupMenu("Search Results");
         searchView.setSearchOptionsMenu(searchOptionsMenu);
-
-        for (JsonElement jasonResult : jsonResults) {
-            Series series = jsonParser.buildSeriesFromJson(jasonResult);
-            int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
-            series.setScore(seriesScore);
-            addSeriesToSearchOptionsMenu(series);
+        if(jsonResults.isEmpty()) {
+            searchView.showEventNotifier("No results found for term");
+        } else {
+            for (JsonElement jasonResult : jsonResults) {
+                Series series = jsonParser.buildSeriesFromJson(jasonResult);
+                int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
+                series.setScore(seriesScore);
+                addSeriesToSearchOptionsMenu(series);
+            }
         }
         searchView.showSearchOptionsMenu();
     }
@@ -118,7 +131,7 @@ public class SearchPresenter implements Presenter{
             JsonElement searchResultExtract2 = jsonParser.getSearchResultExctract(lastRetrievedSeries);
             if (searchResultExtract2 == null) {
                 retrievedSeriesExtract = "No Results";
-                //generar ventana de error
+                searchView.showEventNotifier("No extract found");
             } else {
                 retrievedSeriesExtract = "<h1>" + series.getTitle() + "</h1>";
                 lastSeriesTitle = series.getTitle();
@@ -141,6 +154,9 @@ public class SearchPresenter implements Presenter{
     }
     public String getLastSeriesTitle() {
         return lastSeriesTitle;
+    }
+    public void notifySearchError() {
+        searchView.showEventNotifier("Search couldn't be made");
     }
 
 }

@@ -11,6 +11,7 @@ public class StorageView extends JPanel implements View {
     private JTextPane savedSeriesPane;
     private StoragePresenter storagePresenter;
     private JPopupMenu storageOptions;
+    private JOptionPane eventNotifier;
     private JMenuItem deleteSeries;
     private JMenuItem saveChanges;
 
@@ -70,6 +71,9 @@ public class StorageView extends JPanel implements View {
     }
     public void clearSavedSeriesContent() {
         savedSeriesPane.setText("");
+    }
+    public void showEventNotifier(String message) {
+        eventNotifier.showMessageDialog(this, message);
     }
 
 }

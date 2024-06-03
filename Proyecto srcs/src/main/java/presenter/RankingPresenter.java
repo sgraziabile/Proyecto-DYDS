@@ -62,9 +62,13 @@ public class RankingPresenter {
         }
     }
     public void onRankingSeriesSelected() {
-        if(!scoreView.isSelectionEmpty()) {
-            lastSelectedSeriesTitle = scoreView.getSelectedSeriesTitle();
-            searchRankingModel.searchTerm(lastSelectedSeriesTitle, 5);
+        try {
+            if (!scoreView.isSelectionEmpty()) {
+                lastSelectedSeriesTitle = scoreView.getSelectedSeriesTitle();
+                searchRankingModel.searchTerm(lastSelectedSeriesTitle, 5);
+            }
+        }catch(Exception e) {
+
         }
     }
     private void showSearchResultFromRanking(){

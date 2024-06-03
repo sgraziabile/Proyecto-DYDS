@@ -18,6 +18,7 @@ public class SearchView extends JPanel implements View {
     private JComboBox scoreComboBox;
     private JButton updateScoreButton;
     private JPopupMenu searchOptionsMenu;
+    private JOptionPane eventNotifier;
     private SearchPresenter searchPresenter;
     private SaveSeriesPresenter saveSeriesPresenter;
     private ScorePresenter scorePresenter;
@@ -102,4 +103,8 @@ public class SearchView extends JPanel implements View {
     public void clearSearchField() {
         searchTextField.setText("");
     }
+    public void showEventNotifier(String eventMessage) {
+        eventNotifier.showMessageDialog(this, eventMessage);
+    }
+
 }
