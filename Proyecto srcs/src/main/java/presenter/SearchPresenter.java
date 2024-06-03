@@ -11,6 +11,7 @@ import model.entities.Series;
 import model.listeners.WikiPageModelListener;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
+import utils.JsonParser;
 import views.SearchView;
 
 import javax.swing.*;
@@ -26,12 +27,14 @@ public class SearchPresenter implements Presenter{
     private HtmlHandler htmlHandler;
     private JPopupMenu searchOptionsMenu;
     private String lastSeriesTitle;
+    private JsonParser jsonParser;
 
 
     public SearchPresenter(WikiSearchModel searchModel, WikiPageModel pageModel) {
         this.searchModel = searchModel;
         this.pageModel = pageModel;
         this.htmlHandler = new HtmlHandler();
+        this.jsonParser = new JsonParser();
         initListeners();
     }
     private void initListeners() {
@@ -85,26 +88,14 @@ public class SearchPresenter implements Presenter{
         taskThread.start();
     }
     private void showSearchResult() {
-        //factorizar
         Response<String> lastSearchResult = searchModel.getLastSearchResult();
-        Gson gson = new Gson();
-        JsonObject jobj = gson.fromJson(lastSearchResult.body(), JsonObject.class);
-        JsonObject query = jobj.get("query").getAsJsonObject();
-        Iterator<JsonElement> resultIterator = query.get("search").getAsJsonArray().iterator();
-        JsonArray jsonResults = query.get("search").getAsJsonArray();
-        //factorizar
-        //toAlberto: shows each result in the JSonArry in a Popupmenu
+        JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
         this.searchOptionsMenu = new JPopupMenu("Search Results");
         searchView.setSearchOptionsMenu(searchOptionsMenu);
 
         for (JsonElement jasonResult : jsonResults) {
-            JsonObject jsonSearchResult = jasonResult.getAsJsonObject();
-            String searchResultTitle = jsonSearchResult.get("title").getAsString();
-            String searchResultPageId = jsonSearchResult.get("pageid").getAsString();
-            String searchResultSnippet = jsonSearchResult.get("snippet").getAsString();
-
-            int seriesScore = Integer.parseInt(searchModel.getSeriesScore(searchResultTitle));
-            Series series = new Series(searchResultTitle, searchResultPageId, searchResultSnippet);
+            Series series = jsonParser.buildSeriesFromJson(jasonResult);
+            int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
             series.setScore(seriesScore);
             addSeriesToSearchOptionsMenu(series);
         }
@@ -126,8 +117,8 @@ public class SearchPresenter implements Presenter{
                 retrievedSeriesExtract = "No Results";
                 //generar ventana de error
             } else {
-                retrievedSeriesExtract = "<h1>" + series.title + "</h1>";
-                lastSeriesTitle = series.title;
+                retrievedSeriesExtract = "<h1>" + series.getTitle() + "</h1>";
+                lastSeriesTitle = series.getTitle();
                 retrievedSeriesExtract += searchResultExtract2.getAsString().replace("\\n", "\n");
                 retrievedSeriesExtract = htmlHandler.textToHtml(retrievedSeriesExtract);
                 searchView.showSelectedSeries(retrievedSeriesExtract);

@@ -1,5 +1,9 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import model.APIs.WikipediaSearchAPI;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
@@ -8,6 +12,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import utils.DataBaseManager.DataBase;
 
 import javax.xml.crypto.Data;
+import java.util.Iterator;
 
 public class WikiSearchModel implements Model{
     private WikipediaSearchAPI searchAPI;
@@ -44,4 +49,5 @@ public class WikiSearchModel implements Model{
     public void setListener(WikiSearchModelListener searchModelListener) {
         this.searchModelListener = searchModelListener;
     }
+
 }

@@ -6,6 +6,7 @@ public class RatedSeries {
     private String title;
     private int rating;
     private String lastModifiedDate;
+    private int id;
     private HtmlHandler htmlHandler = new HtmlHandler();
 
     public RatedSeries(String title, int rating, String lastModifiedDate) {

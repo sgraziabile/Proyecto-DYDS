@@ -28,7 +28,7 @@ public class WikiPageModel implements Model{
     public void retrieveSeries(Series series) {
         Response<String> callForPageResponse = null;
         try {
-            callForPageResponse = pageAPI.getExtractByPageID(series.pageID).execute();
+            callForPageResponse = pageAPI.getExtractByPageID(series.getPageID()).execute();
         } catch(Exception e) {
             System.out.println("No result found for term."); //crear una ventana que avise del error
         }

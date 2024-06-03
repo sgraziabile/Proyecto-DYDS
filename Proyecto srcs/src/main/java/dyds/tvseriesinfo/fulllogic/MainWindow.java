@@ -109,7 +109,7 @@ public class MainWindow {
                       //This may take some time, dear user be patient in the meanwhile!
                       setWorkingStatus();
                       //Now fetch the info of the select page
-                      Response<String> callForPageResponse = pageAPI.getExtractByPageID(sr.pageID).execute();
+                      Response<String> callForPageResponse = pageAPI.getExtractByPageID(sr.getPageID()).execute();
 
                       System.out.println("JSON " + callForPageResponse.body());
 
@@ -125,8 +125,8 @@ public class MainWindow {
                       if (searchResultExtract2 == null) {
                         text = "No Results";
                       } else {
-                        text = "<h1>" + sr.title + "</h1>";
-                        selectedResultTitle = sr.title;
+                        text = "<h1>" + sr.getTitle() + "</h1>";
+                        selectedResultTitle = sr.getTitle();
                         text += searchResultExtract2.getAsString().replace("\\n", "\n");
                         text = textToHtml(text);
                       }
