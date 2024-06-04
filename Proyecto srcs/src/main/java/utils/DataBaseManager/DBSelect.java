@@ -40,7 +40,7 @@ public class DBSelect {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-            ResultSet rs = statement.executeQuery("select * from ranking ORDER BY score ASC");
+            ResultSet rs = statement.executeQuery("select * from ranking");
             StringBuilder sb = new StringBuilder();
             ArrayList<RatedSeries> ranking = new ArrayList<>();
             while(rs.next()) {

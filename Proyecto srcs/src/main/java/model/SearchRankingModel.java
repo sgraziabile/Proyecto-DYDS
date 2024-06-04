@@ -21,12 +21,12 @@ public class SearchRankingModel {
     public void setSearchAPI(WikipediaSearchAPI searchAPI) {
         this.searchAPI = searchAPI;
     }
-    public void searchTerm(String termToSearch, int limit) {
+    public void searchTerm(String termToSearch, int limit) throws Exception{
         Response<String> callForSearchResponse = null;
         try {
             callForSearchResponse = searchAPI.searchForTerm(termToSearch + " (Tv series) articletopic:\"television\"",limit).execute();
         } catch(Exception e) {
-            System.out.println("No result found for term."); //crear una ventana que avise del error
+            throw new Exception();
         }
         lastSearchResult = callForSearchResponse;
         notifySearchFromRankingHasFinishedListener();

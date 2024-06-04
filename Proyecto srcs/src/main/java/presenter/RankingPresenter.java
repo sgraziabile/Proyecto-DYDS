@@ -46,7 +46,7 @@ public class RankingPresenter {
             try {
             rankingModel.updateRanking();
             } catch (SQLException e) {
-                scoreView.showEventNotifier("Error updating ranking");
+                scoreView.showEventNotifier("No results could be found for term");
             }
         });
         taskThread.start();
@@ -73,7 +73,7 @@ public class RankingPresenter {
                 searchRankingModel.searchTerm(lastSelectedSeriesTitle, 5);
             }
         }catch(Exception e) {
-
+            searchPresenter.notifySearchError();
         }
     }
     private void showSearchResultFromRanking(){
