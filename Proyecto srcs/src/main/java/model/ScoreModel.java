@@ -11,6 +11,9 @@ public class ScoreModel implements Model {
 
     public ScoreModel() {};
 
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(ScoreModelListener scoreModelListener) {
         this.scoreModelListener = scoreModelListener;
     }

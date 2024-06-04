@@ -77,6 +77,16 @@ public class Main {
 
         DataBase localDataBase = new DataBase();
         localDataBase.loadDatabase();
+        wikiSearchModel.setLocalDataBase(localDataBase);
+        deleteSeriesModel.setLocalDataBase(localDataBase);
+        saveChangesModel.setLocalDataBase(localDataBase);
+        saveSeriesModel.setLocalDataBase(localDataBase);
+        seriesContentModel.setLocalDataBase(localDataBase);
+        scoreModel.setLocalDataBase(localDataBase);
+        rankingModel.setLocalDataBase(localDataBase);
+        retrieveSeriesModel.setLocalDataBase(localDataBase);
+
+
         storageView.requestSavedSeries();
         scoreView.showSeriesRanking();
     }

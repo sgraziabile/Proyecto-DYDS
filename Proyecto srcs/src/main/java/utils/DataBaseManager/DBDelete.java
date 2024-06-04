@@ -10,8 +10,11 @@ public class DBDelete {
     public static void deleteSavedSeries(String title) {
         Connection connection = null;
         try {
+            // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
-            Statement statement = setDataBaseConnection(connection);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
             statement.executeUpdate("DELETE FROM catalog WHERE title = '" + title + "'" );
         }
         catch(SQLException e) {
@@ -29,17 +32,5 @@ public class DBDelete {
                 System.err.println(e);
             }
         }
-    }
-    private static Statement setDataBaseConnection(Connection connection) {
-        try {
-            // create a database connection
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            return statement;
-        }
-        catch(SQLException e) {
-            System.err.println("Error saving " + e.getMessage());
-        }
-        return null;
     }
 }

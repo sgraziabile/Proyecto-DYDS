@@ -13,6 +13,9 @@ public class RetrieveSeriesModel implements Model {
     public RetrieveSeriesModel() {
 
     }
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(RetrieveSeriesModelListener retrieveSeriesModelListener) {
         this.retrieveSeriesModelListener = retrieveSeriesModelListener;
     }

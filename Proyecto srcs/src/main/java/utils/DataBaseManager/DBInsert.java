@@ -1,17 +1,22 @@
 package utils.DataBaseManager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import model.entities.RatedSeries;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class DBInsert {
-    Connection connection;
-    public static void saveSeriesContent(String title, String extract) {
+    public void saveSeriesContent(String title, String extract) {
         Connection connection = null;
         try {
+            // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
-            Statement statement = setDataBaseConnection(connection);
+
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+            System.out.println("INSERT  " + title + "', '"+ extract);
+
             statement.executeUpdate("replace into catalog values(null, '"+ title + "', '"+ extract + "', 1)");
         }
         catch(SQLException e) {
@@ -23,20 +28,22 @@ public class DBInsert {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
                 System.err.println( e);
             }
         }
     }
-    public static void saveSeriesScore(String title, int score, java.sql.Date lastUpdateDate) {
+    public void updateSeriesScore(String title, String score){
         Connection connection = null;
         try {
-            Statement statement = setDataBaseConnection(connection);
-            System.out.println("INSERT  " + title + "', '"+ score + "', '"+ lastUpdateDate);
-            statement.executeUpdate("replace into ranking values('"+ title + "', '"+ score + "', '"+ lastUpdateDate + "')");
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+            statement.executeUpdate("replace into ranking values('"+ title + "', "+ score + ", datetime('now','-3 hours'))");
         }
         catch(SQLException e) {
-            System.err.println("Error saving " + e.getMessage());
+
         }
         finally {
             try {
@@ -44,22 +51,10 @@ public class DBInsert {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
                 System.err.println(e);
             }
         }
     }
-    private static Statement setDataBaseConnection(Connection connection) {
-        try {
-            // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            return statement;
-        }
-        catch(SQLException e) {
-            System.err.println("Error saving " + e.getMessage());
-        }
-        return null;
-    }
+
+
 }

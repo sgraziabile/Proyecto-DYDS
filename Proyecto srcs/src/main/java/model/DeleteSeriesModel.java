@@ -10,13 +10,15 @@ public class DeleteSeriesModel implements Model{
     public DeleteSeriesModel() {
 
     }
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(DeleteSeriesModelListener deleteSeriesModelListener) {
         this.deleteSeriesModelListener = deleteSeriesModelListener;
     }
     public void deleteSeries(String seriesTitle) {
         localDataBase.deleteSavedSeries(seriesTitle);
         deleteSeriesModelListener.deleteSeriesHasFinished();
-
     }
     private void notifyDeleteSeriesHasFinished() {
         deleteSeriesModelListener.deleteSeriesHasFinished();

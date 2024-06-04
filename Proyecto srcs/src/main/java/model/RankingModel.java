@@ -14,6 +14,9 @@ public class RankingModel implements Model{
 
     public RankingModel() {};
 
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(RankingModelListener rankingModelListener) {
         this.rankingModelListener = rankingModelListener;
     }

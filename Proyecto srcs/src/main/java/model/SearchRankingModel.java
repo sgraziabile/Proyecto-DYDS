@@ -18,6 +18,9 @@ public class SearchRankingModel {
                 .build();
         searchAPI = retrofit.create(WikipediaSearchAPI.class);
     }
+    public void setSearchAPI(WikipediaSearchAPI searchAPI) {
+        this.searchAPI = searchAPI;
+    }
     public void searchTerm(String termToSearch, int limit) {
         Response<String> callForSearchResponse = null;
         try {

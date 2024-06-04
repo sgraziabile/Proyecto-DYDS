@@ -10,6 +10,9 @@ public class SaveChangesModel implements Model{
     public SaveChangesModel() {
 
     }
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(SaveChangesModelListener saveChangesModelListener) {
         this.saveChangesModelListener = saveChangesModelListener;
     }

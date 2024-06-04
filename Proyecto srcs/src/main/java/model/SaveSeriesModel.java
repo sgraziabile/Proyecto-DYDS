@@ -8,6 +8,10 @@ public class SaveSeriesModel {
     private SaveSeriesModelListener saveSeriesModelListener;
 
     public SaveSeriesModel() {}
+
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(SaveSeriesModelListener saveSeriesModelListener) {
         this.saveSeriesModelListener = saveSeriesModelListener;
     }

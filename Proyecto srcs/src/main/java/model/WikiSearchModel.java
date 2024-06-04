@@ -27,6 +27,9 @@ public class WikiSearchModel implements Model{
                 .build();
         searchAPI = retrofit.create(WikipediaSearchAPI.class);
     }
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void searchTerm(String termToSearch, int limit) throws Exception {
         Response<String> callForSearchResponse = null;
         try {
@@ -36,6 +39,9 @@ public class WikiSearchModel implements Model{
         }
         lastSearchResult = callForSearchResponse;
         notifySearchHasFinishedListener();
+    }
+    public void setSearchAPI(WikipediaSearchAPI searchAPI) {
+        this.searchAPI = searchAPI;
     }
     public String getSeriesScore(String title) {
         return localDataBase.getSeriesScore(title);

@@ -11,6 +11,9 @@ public class SeriesContentModel implements Model{
     public SeriesContentModel() {
 
     }
+    public void setLocalDataBase(DataBase localDataBase) {
+        this.localDataBase = localDataBase;
+    }
     public void setListener(SeriesContentModelListener seriesContentModelListener) {
         this.seriesContentModelListener = seriesContentModelListener;
     }

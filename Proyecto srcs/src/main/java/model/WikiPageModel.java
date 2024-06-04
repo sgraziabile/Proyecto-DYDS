@@ -21,16 +21,19 @@ public class WikiPageModel implements Model{
                 .build();
         pageAPI = retrofit.create(WikipediaPageAPI.class);
     }
+    public void setPageAPI(WikipediaPageAPI pageAPI) {
+        this.pageAPI = pageAPI;
+    }
     private void notifySeriesRetrievedListener(Series series) {pageModelListener.seriesRetrieved(series);};
     public void setListener(WikiPageModelListener wikiPageModelListener) {
         this.pageModelListener = wikiPageModelListener;
     }
-    public void retrieveSeries(Series series) {
+    public void retrieveSeries(Series series) throws Exception {
         Response<String> callForPageResponse = null;
         try {
             callForPageResponse = pageAPI.getExtractByPageID(series.getPageID()).execute();
         } catch(Exception e) {
-            System.out.println("No result found for term."); //crear una ventana que avise del error
+            throw new Exception();
         }
         lastRetrievedSeries = callForPageResponse;
         notifySeriesRetrievedListener(series);

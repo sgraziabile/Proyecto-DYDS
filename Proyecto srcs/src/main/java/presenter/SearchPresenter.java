@@ -102,10 +102,14 @@ public class SearchPresenter implements Presenter{
         }
     }
     private void requestRetrieveSeries(Series selectedSeries) {
-        taskThread = new Thread(() -> {
-            pageModel.retrieveSeries(selectedSeries) ;
-        });
-        taskThread.start();
+            taskThread = new Thread(() -> {
+                try {
+                    pageModel.retrieveSeries(selectedSeries);
+                }catch(Exception e) {
+                    notifySearchError();
+                }
+            });
+            taskThread.start();
     }
     private void showSearchResult() {
         Response<String> lastSearchResult = searchModel.getLastSearchResult();

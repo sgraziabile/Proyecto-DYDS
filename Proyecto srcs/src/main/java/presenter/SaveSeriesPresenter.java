@@ -1,6 +1,5 @@
 package presenter;
 
-import model.DataBaseModel;
 import model.SaveSeriesModel;
 import model.listeners.SaveSeriesModelListener;
 import views.SearchView;
