@@ -16,6 +16,7 @@ import utils.JsonParser;
 import views.SearchView;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -119,11 +120,15 @@ public class SearchPresenter implements Presenter{
         if(jsonResults.isEmpty()) {
             searchView.showEventNotifier("No results found for term");
         } else {
-            for (JsonElement jasonResult : jsonResults) {
-                Series series = jsonParser.buildSeriesFromJson(jasonResult);
-                int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
-                series.setScore(seriesScore);
-                addSeriesToSearchOptionsMenu(series);
+            try {
+                for (JsonElement jasonResult : jsonResults) {
+                    Series series = jsonParser.buildSeriesFromJson(jasonResult);
+                    int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
+                    series.setScore(seriesScore);
+                    addSeriesToSearchOptionsMenu(series);
+                }
+            } catch (SQLException e) {
+                searchView.showEventNotifier("Error getting series scores from database");
             }
         }
         searchView.showSearchOptionsMenu();

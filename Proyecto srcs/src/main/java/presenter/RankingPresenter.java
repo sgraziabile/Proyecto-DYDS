@@ -9,6 +9,7 @@ import model.listeners.SearchRankingModelListener;
 import utils.HtmlHandler;
 import views.ScoreView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RankingPresenter {
@@ -42,7 +43,11 @@ public class RankingPresenter {
     }
     public void requestSeriesRanking() {
         taskThread = new Thread(() -> {
+            try {
             rankingModel.updateRanking();
+            } catch (SQLException e) {
+                scoreView.showEventNotifier("Error updating ranking");
+            }
         });
         taskThread.start();
     }

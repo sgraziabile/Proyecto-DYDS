@@ -5,6 +5,7 @@ import model.listeners.RankingModelListener;
 import utils.DataBaseManager.DataBase;
 
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RankingModel implements Model{
@@ -20,9 +21,13 @@ public class RankingModel implements Model{
     public void setListener(RankingModelListener rankingModelListener) {
         this.rankingModelListener = rankingModelListener;
     }
-    public void updateRanking() {
-        lastUpdatedRanking = localDataBase.getRankedSeries();
-        rankingModelListener.rankingHasChanged();
+    public void updateRanking() throws SQLException{
+        try {
+             lastUpdatedRanking = localDataBase.getRankedSeries();
+             rankingModelListener.rankingHasChanged();
+        } catch (SQLException e) {
+            throw new SQLException();
+        }
     }
     public ArrayList<RatedSeries> getLastUpdatedRanking() {
         return lastUpdatedRanking;

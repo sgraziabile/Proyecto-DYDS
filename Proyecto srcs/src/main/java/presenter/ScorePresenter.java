@@ -38,11 +38,16 @@ public class ScorePresenter implements Presenter{
         taskThread = new Thread(() -> {
             String seriesTitle = searchPresenter.getLastSeriesTitle();
             String seriesScore = searchView.getScore();
-            scoreModel.updateSeriesScore(seriesTitle, seriesScore);
+            try {
+                scoreModel.updateSeriesScore(seriesTitle, seriesScore);
+            } catch (Exception e) {
+                searchView.showEventNotifier("Error updating score");
+            }
         });
         taskThread.start();
     }
     private void showUpdatedRanking() {
+        searchView.showEventNotifier("Score updated successfully");
         rankingPresenter.requestSeriesRanking();
     }
 }

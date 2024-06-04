@@ -3,6 +3,8 @@ package model;
 import utils.DataBaseManager.DataBase;
 import model.listeners.SeriesContentModelListener;
 
+import java.sql.SQLException;
+
 public class SeriesContentModel implements Model{
     private SeriesContentModelListener seriesContentModelListener;
     private DataBase localDataBase;
@@ -17,9 +19,13 @@ public class SeriesContentModel implements Model{
     public void setListener(SeriesContentModelListener seriesContentModelListener) {
         this.seriesContentModelListener = seriesContentModelListener;
     }
-    public void showSeriesContent(String seriesTitle) {
+    public void showSeriesContent(String seriesTitle) throws SQLException {
+        try {
         lastSeriesContent = localDataBase.getSavedSeriesExctract(seriesTitle);
         seriesContentModelListener.showSeriesContentHasFinished();
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        }
     }
     public String getLastSeriesContent() {
         return lastSeriesContent;

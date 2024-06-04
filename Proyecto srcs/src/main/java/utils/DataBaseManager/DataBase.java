@@ -33,25 +33,53 @@ public class DataBase {
       System.out.println(e.getMessage());
     }
   }
-  public ArrayList<String> getSavedSeriesTitles() {
+  public ArrayList<String> getSavedSeriesTitles() throws SQLException{
+    try {
     return dbSelect.getSavedSeriesTitles();
+    } catch (SQLException e) {
+      throw new SQLException(e.getMessage());
+    }
   }
-  public void saveSeriesContent(String title, String extract) {
-    dbInsert.saveSeriesContent(title, extract);
+  public void saveSeriesContent(String title, String extract) throws SQLException {
+    try {
+      dbInsert.saveSeriesContent(title, extract);
+    } catch (SQLException e) {
+      throw new SQLException();
+    }
   }
-  public  String getSavedSeriesExctract(String title) {
-    return dbSelect.getSavedSeriesExctract(title);
+  public  String getSavedSeriesExctract(String title) throws SQLException {
+      try {
+      return dbSelect.getSavedSeriesExctract(title);
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        }
   }
-  public void deleteSavedSeries(String title) {
-    dbDelete.deleteSavedSeries(title);
+  public void deleteSavedSeries(String title) throws SQLException{
+    try {
+      dbDelete.deleteSavedSeries(title);
+    }catch (SQLException e) {
+      throw new SQLException();
+    }
   }
-  public void updateSeriesScore(String title, String score) {
+  public void updateSeriesScore(String title, String score) throws  SQLException {
+    try {
     dbInsert.updateSeriesScore(title, score);
+    } catch (SQLException e) {
+      throw new SQLException();
+    }
   }
-  public String getSeriesScore(String title) {
-    return dbSelect.getSeriesScore(title);
+  public String getSeriesScore(String title) throws SQLException {
+    try {
+      return dbSelect.getSeriesScore(title);
+    } catch (SQLException e) {
+      throw new SQLException();
+    }
   }
-  public ArrayList<RatedSeries> getRankedSeries() {
-    return dbSelect.getRankedSeries();
+  public ArrayList<RatedSeries> getRankedSeries() throws SQLException {
+    try {
+      return dbSelect.getRankedSeries();
+    } catch (SQLException e) {
+        throw new SQLException();
+    }
   }
 }

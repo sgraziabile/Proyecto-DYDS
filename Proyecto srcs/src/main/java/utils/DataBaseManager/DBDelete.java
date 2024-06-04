@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DBDelete {
 
-    public static void deleteSavedSeries(String title) {
+    public static void deleteSavedSeries(String title) throws SQLException{
         Connection connection = null;
         try {
             // create a database connection
@@ -18,9 +18,7 @@ public class DBDelete {
             statement.executeUpdate("DELETE FROM catalog WHERE title = '" + title + "'" );
         }
         catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println("Get title error " + e.getMessage());
+          throw new SQLException();
         }
         finally {
             try {
@@ -28,8 +26,7 @@ public class DBDelete {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
-                System.err.println(e);
+                throw new SQLException();
             }
         }
     }

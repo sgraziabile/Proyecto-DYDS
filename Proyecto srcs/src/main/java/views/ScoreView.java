@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class ScoreView extends JPanel {
     private JPanel scorePanel;
+    private JOptionPane eventNotifier;
     private JList<RatedSeries> rankingList;
     private JScrollPane rankingScrollPane;
     private RankingPresenter rankingPresenter;
@@ -57,6 +58,9 @@ public class ScoreView extends JPanel {
     }
     public boolean isSelectionEmpty() {
         return rankingList.getSelectedValue() == null;
+    }
+    public void showEventNotifier(String eventMessage) {
+        eventNotifier.showMessageDialog(this, eventMessage);
     }
 
 }

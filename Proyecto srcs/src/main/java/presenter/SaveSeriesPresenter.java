@@ -44,7 +44,11 @@ public class SaveSeriesPresenter implements Presenter {
     }
     private void requestSaveSeries(String seriesTitle, String seriesExctract) {
         taskThread = new Thread(() -> {
+            try {
             saveSeriesModel.saveSeries(seriesTitle, seriesExctract);
+            } catch (Exception e) {
+                searchView.showEventNotifier("Error saving TV series");
+            }
         });
         taskThread.start();
     }

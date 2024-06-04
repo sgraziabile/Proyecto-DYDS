@@ -3,6 +3,7 @@ package model;
 import model.listeners.ScoreModelListener;
 import utils.DataBaseManager.DataBase;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class ScoreModel implements Model {
@@ -17,8 +18,12 @@ public class ScoreModel implements Model {
     public void setListener(ScoreModelListener scoreModelListener) {
         this.scoreModelListener = scoreModelListener;
     }
-    public void updateSeriesScore(String seriesTitle, String seriesScore) {
-        localDataBase.updateSeriesScore(seriesTitle.replace("'", "`"), seriesScore);
-        scoreModelListener.scoreHasChanged();
+    public void updateSeriesScore(String seriesTitle, String seriesScore) throws SQLException {
+        try {
+            localDataBase.updateSeriesScore(seriesTitle.replace("'", "`"), seriesScore);
+            scoreModelListener.scoreHasChanged();
+        } catch (Exception e) {
+            throw new SQLException();
+        }
     }
 }

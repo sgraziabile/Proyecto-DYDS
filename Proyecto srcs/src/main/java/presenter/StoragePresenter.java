@@ -8,6 +8,7 @@ import model.listeners.SaveChangesModelListener;
 import model.listeners.SeriesContentModelListener;
 import views.StorageView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StoragePresenter implements Presenter{
@@ -72,7 +73,11 @@ public class StoragePresenter implements Presenter{
     }
     public  void getSavedSeries() {
         taskThread = new Thread(() -> {
+            try {
             retrieveSeriesModel.getSavedSeries();
+            }catch(SQLException e) {
+                storageView.showEventNotifier("Error retrieving saved series");
+            }
         });
         taskThread.start();
     }
@@ -81,8 +86,12 @@ public class StoragePresenter implements Presenter{
         storageView.showSavedSeries(formattedSavedSeries);
     }
     private Object[] getSavedSeriesTitles() {
-        Object[] formattedSavedSeries;
-        formattedSavedSeries = formatSavedSeries(retrieveSeriesModel.getSavedSeriesTitles());
+        Object[] formattedSavedSeries = new Object[0];
+        try {
+            formattedSavedSeries = formatSavedSeries(retrieveSeriesModel.getSavedSeriesTitles());
+        } catch(SQLException e) {
+            storageView.showEventNotifier(e.getMessage());
+        }
         return formattedSavedSeries;
     }
     private Object[] formatSavedSeries(ArrayList<String> savedSeriesTitles) {
@@ -99,7 +108,11 @@ public class StoragePresenter implements Presenter{
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
         String modifiedExtract  = storageView.getSelectedSeriesContent();
         taskThread = new Thread(() -> {
+            try {
             saveChangesModel.saveChanges(selectedSeriesTitle.toString(), modifiedExtract);
+            }catch(SQLException e) {
+                storageView.showEventNotifier("Error saving changes");
+            }
         });
         taskThread.start();
     }
@@ -111,14 +124,22 @@ public class StoragePresenter implements Presenter{
     private void deleteSelectedSeries() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
         taskThread = new Thread(() -> {
-            deleteSeriesModel.deleteSeries(selectedSeriesTitle.toString());
+            try {
+                deleteSeriesModel.deleteSeries(selectedSeriesTitle.toString());
+            }catch(SQLException e) {
+                storageView.showEventNotifier("Error deleting series");
+            }
         });
         taskThread.start();
     }
     public void onSavedSeriesSelected() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
         taskThread = new Thread(() -> {
+            try {
             seriesContentModel.showSeriesContent(selectedSeriesTitle.toString());
+            }catch(SQLException e) {
+                storageView.showEventNotifier(e.getMessage());
+            }
         });
         taskThread.start();
     }

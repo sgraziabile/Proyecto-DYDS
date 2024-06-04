@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBSelect {
-    public String getSeriesScore(String title) {
+    public String getSeriesScore(String title) throws SQLException{
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
@@ -21,7 +21,7 @@ public class DBSelect {
                 return "0";
         }
         catch(SQLException e) {
-            System.err.println("Get title error " + e.getMessage());
+            throw new SQLException();
         }
         finally {
             try {
@@ -29,12 +29,11 @@ public class DBSelect {
                     connection.close();
             }
             catch(SQLException e) {
-                System.err.println(e);
+               throw new SQLException();
             }
         }
-        return null;
     }
-    public ArrayList<RatedSeries> getRankedSeries() {
+    public ArrayList<RatedSeries> getRankedSeries() throws SQLException{
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
@@ -54,7 +53,7 @@ public class DBSelect {
             return ranking;
         }
         catch(SQLException e) {
-            System.err.println("Get title error " + e.getMessage());
+            throw new SQLException();
         }
         finally {
             try {
@@ -62,12 +61,11 @@ public class DBSelect {
                     connection.close();
             }
             catch(SQLException e) {
-                System.err.println(e);
+                throw new SQLException();
             }
         }
-        return null;
     }
-    public static String getSavedSeriesExctract(String title) {
+    public String getSavedSeriesExctract(String title) throws SQLException {
         Connection connection = null;
         try {
             // create a database connection
@@ -80,9 +78,7 @@ public class DBSelect {
             return rs.getString("extract");
         }
         catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println("Get title error " + e.getMessage());
+            throw new SQLException(e.getMessage());
         }
         finally {
             try {
@@ -91,12 +87,11 @@ public class DBSelect {
             }
             catch(SQLException e) {
                 // connection close failed.
-                System.err.println(e);
+                throw new SQLException(e.getMessage());
             }
         }
-        return null;
     }
-    public ArrayList<String> getSavedSeriesTitles() {
+    public ArrayList<String> getSavedSeriesTitles() throws SQLException {
         ArrayList<String> titles = new ArrayList<>();
         Connection connection = null;
         try {
@@ -109,9 +104,7 @@ public class DBSelect {
             while(rs.next()) titles.add(rs.getString("title"));
         }
         catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(e.getMessage());
+            throw new SQLException(e.getMessage());
         }
         finally {
             try {
@@ -119,8 +112,7 @@ public class DBSelect {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
-                System.err.println(e);
+                throw new SQLException(e.getMessage());
             }
             return titles;
         }

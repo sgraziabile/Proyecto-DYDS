@@ -12,6 +12,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import utils.DataBaseManager.DataBase;
 
 import javax.xml.crypto.Data;
+import java.sql.SQLException;
 import java.util.Iterator;
 
 public class WikiSearchModel implements Model{
@@ -43,8 +44,12 @@ public class WikiSearchModel implements Model{
     public void setSearchAPI(WikipediaSearchAPI searchAPI) {
         this.searchAPI = searchAPI;
     }
-    public String getSeriesScore(String title) {
-        return localDataBase.getSeriesScore(title);
+    public String getSeriesScore(String title) throws SQLException{
+        try {
+            return localDataBase.getSeriesScore(title);
+    } catch (SQLException e) {
+            throw new SQLException();
+        }
     }
     public Response<String> getLastSearchResult() {
         return lastSearchResult;

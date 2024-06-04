@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBInsert {
-    public void saveSeriesContent(String title, String extract) {
+    public void saveSeriesContent(String title, String extract) throws SQLException {
         Connection connection = null;
         try {
             // create a database connection
@@ -20,7 +20,7 @@ public class DBInsert {
             statement.executeUpdate("replace into catalog values(null, '"+ title + "', '"+ extract + "', 1)");
         }
         catch(SQLException e) {
-            System.err.println("Error saving " + e.getMessage());
+            throw new SQLException();
         }
         finally {
             try {
@@ -28,11 +28,11 @@ public class DBInsert {
                     connection.close();
             }
             catch(SQLException e) {
-                System.err.println( e);
+                throw new SQLException();
             }
         }
     }
-    public void updateSeriesScore(String title, String score){
+    public void updateSeriesScore(String title, String score) throws SQLException {
         Connection connection = null;
         try {
             // create a database connection
@@ -43,7 +43,7 @@ public class DBInsert {
             statement.executeUpdate("replace into ranking values('"+ title + "', "+ score + ", datetime('now','-3 hours'))");
         }
         catch(SQLException e) {
-
+            throw new SQLException();
         }
         finally {
             try {
@@ -51,7 +51,7 @@ public class DBInsert {
                     connection.close();
             }
             catch(SQLException e) {
-                System.err.println(e);
+                throw new SQLException();
             }
         }
     }
