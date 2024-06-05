@@ -2,13 +2,14 @@ package model;
 
 import model.APIs.WikipediaPageAPI;
 import model.entities.Series;
+import model.interfaces.PageModelInterface;
 import model.listeners.WikiPageModelListener;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import utils.APIConsumer.PageApiConsumer;
 
-public class WikiPageModel implements Model{
+public class WikiPageModel implements PageModelInterface {
 
     private PageApiConsumer pageApiConsumer;
     private WikiPageModelListener pageModelListener;

@@ -1,25 +1,23 @@
 package model;
 
-import model.APIs.WikipediaSearchAPI;
+import model.interfaces.SearchModelInterface;
 import model.listeners.SearchRankingModelListener;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-import utils.APIConsumer.SearchApiCosnumer;
+import utils.APIConsumer.SearchApiConsumer;
 
-public class SearchRankingModel {
+public class SearchRankingModel implements SearchModelInterface {
     private SearchRankingModelListener searchRankingModelListener;
-    private SearchApiCosnumer searchApiCosnumer;
+    private SearchApiConsumer searchApiConsumer;
     private Response<String> lastSearchResult;
 
     public SearchRankingModel() {
 
     }
-   public void setSearchApiConsumer(SearchApiCosnumer searchApiCosnumer) {this.searchApiCosnumer = searchApiCosnumer;}
+   public void setSearchApiConsumer(SearchApiConsumer searchApiConsumer) {this.searchApiConsumer = searchApiConsumer;}
     public void searchTerm(String termToSearch, int limit) throws Exception{
         Response<String> callForSearchResponse = null;
         try {
-            callForSearchResponse = searchApiCosnumer.searchTerm(termToSearch, limit);
+            callForSearchResponse = searchApiConsumer.searchTerm(termToSearch, limit);
         } catch(Exception e) {
             throw new Exception();
         }

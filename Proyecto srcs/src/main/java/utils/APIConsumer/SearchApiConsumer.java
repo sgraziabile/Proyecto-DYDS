@@ -5,10 +5,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class SearchApiCosnumer {
+public class SearchApiConsumer implements SearchApiConsumerInterface{
     private WikipediaSearchAPI searchAPI;
 
-    public SearchApiCosnumer() {
+    public SearchApiConsumer() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://en.wikipedia.org/w/")
                 .addConverterFactory(ScalarsConverterFactory.create())

@@ -1,19 +1,20 @@
 package model;
 
 import model.APIs.WikipediaSearchAPI;
+import model.interfaces.SearchModelInterface;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
-import utils.APIConsumer.SearchApiCosnumer;
+import utils.APIConsumer.SearchApiConsumer;
 import utils.DataBaseManager.DataBase;
 
 import java.sql.SQLException;
 
-public class WikiSearchModel implements Model{
+public class WikiSearchModel implements SearchModelInterface {
     private WikipediaSearchAPI searchAPI;
     private WikiSearchModelListener searchModelListener;
     private Response<String> lastSearchResult;
     private DataBase localDataBase;
-    private SearchApiCosnumer searchApiCosnumer;
+    private SearchApiConsumer searchApiConsumer;
 
     public WikiSearchModel() {
 
@@ -21,17 +22,18 @@ public class WikiSearchModel implements Model{
     public void setLocalDataBase(DataBase localDataBase) {
         this.localDataBase = localDataBase;
     }
-    public void setSearchApiConsumer(SearchApiCosnumer searchApiCosnumer) {
-        this.searchApiCosnumer = searchApiCosnumer;
+    public void setSearchApiConsumer(SearchApiConsumer searchApiConsumer) {
+        this.searchApiConsumer = searchApiConsumer;
     }
     public void searchTerm(String termToSearch, int limit) throws Exception {
         Response<String> callForSearchResponse = null;
         try {
-            callForSearchResponse = searchApiCosnumer.searchTerm(termToSearch, limit);
+            callForSearchResponse = searchApiConsumer.searchTerm(termToSearch, limit);
         } catch(Exception e) {
             throw new Exception();
         }
         lastSearchResult = callForSearchResponse;
+        System.out.println(lastSearchResult.body());
         notifySearchHasFinishedListener();
     }
     public void setSearchAPI(WikipediaSearchAPI searchAPI) {
