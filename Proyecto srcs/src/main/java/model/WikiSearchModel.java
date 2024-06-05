@@ -1,40 +1,33 @@
 package model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import model.APIs.WikipediaSearchAPI;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import utils.APIConsumer.SearchApiCosnumer;
 import utils.DataBaseManager.DataBase;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 public class WikiSearchModel implements Model{
     private WikipediaSearchAPI searchAPI;
     private WikiSearchModelListener searchModelListener;
     private Response<String> lastSearchResult;
     private DataBase localDataBase;
+    private SearchApiCosnumer searchApiCosnumer;
 
     public WikiSearchModel() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://en.wikipedia.org/w/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        searchAPI = retrofit.create(WikipediaSearchAPI.class);
+
     }
     public void setLocalDataBase(DataBase localDataBase) {
         this.localDataBase = localDataBase;
     }
+    public void setSearchApiConsumer(SearchApiCosnumer searchApiCosnumer) {
+        this.searchApiCosnumer = searchApiCosnumer;
+    }
     public void searchTerm(String termToSearch, int limit) throws Exception {
         Response<String> callForSearchResponse = null;
         try {
-            callForSearchResponse = searchAPI.searchForTerm(termToSearch + " (Tv series) articletopic:\"television\"",limit).execute();
+            callForSearchResponse = searchApiCosnumer.searchTerm(termToSearch, limit);
         } catch(Exception e) {
             throw new Exception();
         }

@@ -5,26 +5,21 @@ import model.listeners.SearchRankingModelListener;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import utils.APIConsumer.SearchApiCosnumer;
 
 public class SearchRankingModel {
-    private WikipediaSearchAPI searchAPI;
     private SearchRankingModelListener searchRankingModelListener;
+    private SearchApiCosnumer searchApiCosnumer;
     private Response<String> lastSearchResult;
 
     public SearchRankingModel() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://en.wikipedia.org/w/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        searchAPI = retrofit.create(WikipediaSearchAPI.class);
+
     }
-    public void setSearchAPI(WikipediaSearchAPI searchAPI) {
-        this.searchAPI = searchAPI;
-    }
+   public void setSearchApiConsumer(SearchApiCosnumer searchApiCosnumer) {this.searchApiCosnumer = searchApiCosnumer;}
     public void searchTerm(String termToSearch, int limit) throws Exception{
         Response<String> callForSearchResponse = null;
         try {
-            callForSearchResponse = searchAPI.searchForTerm(termToSearch + " (Tv series) articletopic:\"television\"",limit).execute();
+            callForSearchResponse = searchApiCosnumer.searchTerm(termToSearch, limit);
         } catch(Exception e) {
             throw new Exception();
         }

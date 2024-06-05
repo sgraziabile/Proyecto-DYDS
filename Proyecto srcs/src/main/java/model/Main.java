@@ -1,7 +1,8 @@
 package model;
 
-import model.entities.RatedSeries;
 import presenter.*;
+import utils.APIConsumer.PageApiConsumer;
+import utils.APIConsumer.SearchApiCosnumer;
 import utils.DataBaseManager.DataBase;
 import views.BaseView;
 import views.ScoreView;
@@ -10,7 +11,6 @@ import views.StorageView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -85,6 +85,12 @@ public class Main {
         scoreModel.setLocalDataBase(localDataBase);
         rankingModel.setLocalDataBase(localDataBase);
         retrieveSeriesModel.setLocalDataBase(localDataBase);
+
+        SearchApiCosnumer searchApiCosnumer = new SearchApiCosnumer();
+        PageApiConsumer pageApiConsumer = new PageApiConsumer();
+        wikiSearchModel.setSearchApiConsumer(searchApiCosnumer);
+        searchRankingModel.setSearchApiConsumer(searchApiCosnumer);
+        wikiPageModel.setPageApiConsumer(pageApiConsumer);
 
 
         storageView.requestSavedSeries();
