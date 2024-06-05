@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class RetrieveSeriesModel implements Model {
     private DataBase localDataBase;
-    private RetrieveSeriesModelListener retrieveSeriesModelListener;
+    private ArrayList<RetrieveSeriesModelListener> retrieveSeriesModelListeners = new ArrayList<>();
     private ArrayList<String> savedSeriesTitles;
 
     public RetrieveSeriesModel() {
@@ -18,12 +18,12 @@ public class RetrieveSeriesModel implements Model {
         this.localDataBase = localDataBase;
     }
     public void setListener(RetrieveSeriesModelListener retrieveSeriesModelListener) {
-        this.retrieveSeriesModelListener = retrieveSeriesModelListener;
+        this.retrieveSeriesModelListeners.add(retrieveSeriesModelListener);
     }
     public void getSavedSeries() throws SQLException{
         try {
             savedSeriesTitles = getSavedSeriesTitles();
-            retrieveSeriesModelListener.retrieveSeriesHasFinished();
+            notifyRetrieveSeriesHasFinished();
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         }
@@ -33,6 +33,11 @@ public class RetrieveSeriesModel implements Model {
         return localDataBase.getSavedSeriesTitles();
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
+        }
+    }
+    private void notifyRetrieveSeriesHasFinished() {
+        for (RetrieveSeriesModelListener retrieveSeriesModelListener : retrieveSeriesModelListeners) {
+            retrieveSeriesModelListener.retrieveSeriesHasFinished();
         }
     }
 }

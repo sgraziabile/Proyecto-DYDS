@@ -4,9 +4,10 @@ import utils.DataBaseManager.DataBase;
 import model.listeners.DeleteSeriesModelListener;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DeleteSeriesModel implements Model{
-    private DeleteSeriesModelListener deleteSeriesModelListener;
+    private ArrayList<DeleteSeriesModelListener> deleteSeriesModelListeners = new ArrayList<>();
     private DataBase localDataBase;
 
     public DeleteSeriesModel() {
@@ -16,18 +17,20 @@ public class DeleteSeriesModel implements Model{
         this.localDataBase = localDataBase;
     }
     public void setListener(DeleteSeriesModelListener deleteSeriesModelListener) {
-        this.deleteSeriesModelListener = deleteSeriesModelListener;
+        this.deleteSeriesModelListeners.add(deleteSeriesModelListener);
     }
     public void deleteSeries(String seriesTitle) throws SQLException {
         try {
-        localDataBase.deleteSavedSeries(seriesTitle);
-        deleteSeriesModelListener.deleteSeriesHasFinished();
+            localDataBase.deleteSavedSeries(seriesTitle);
+            notifyDeleteSeriesHasFinished();
         } catch (SQLException e) {
             throw new SQLException();
         }
     }
     private void notifyDeleteSeriesHasFinished() {
-        deleteSeriesModelListener.deleteSeriesHasFinished();
+        for (DeleteSeriesModelListener deleteSeriesModelListener : deleteSeriesModelListeners) {
+            deleteSeriesModelListener.deleteSeriesHasFinished();
+        }
     }
 
 

@@ -5,16 +5,18 @@ import model.interfaces.SearchModelInterface;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
+import utils.APIConsumer.SearchApiConsumerInterface;
 import utils.DataBaseManager.DataBase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class WikiSearchModel implements SearchModelInterface {
     private WikipediaSearchAPI searchAPI;
-    private WikiSearchModelListener searchModelListener;
+    private ArrayList<WikiSearchModelListener> searchModelListeners = new ArrayList<>();
     private Response<String> lastSearchResult;
     private DataBase localDataBase;
-    private SearchApiConsumer searchApiConsumer;
+    private SearchApiConsumerInterface searchApiConsumer;
 
     public WikiSearchModel() {
 
@@ -22,7 +24,7 @@ public class WikiSearchModel implements SearchModelInterface {
     public void setLocalDataBase(DataBase localDataBase) {
         this.localDataBase = localDataBase;
     }
-    public void setSearchApiConsumer(SearchApiConsumer searchApiConsumer) {
+    public void setSearchApiConsumer(SearchApiConsumerInterface searchApiConsumer) {
         this.searchApiConsumer = searchApiConsumer;
     }
     public void searchTerm(String termToSearch, int limit) throws Exception {
@@ -33,7 +35,6 @@ public class WikiSearchModel implements SearchModelInterface {
             throw new Exception();
         }
         lastSearchResult = callForSearchResponse;
-        System.out.println(lastSearchResult.body());
         notifySearchHasFinishedListener();
     }
     public void setSearchAPI(WikipediaSearchAPI searchAPI) {
@@ -50,10 +51,11 @@ public class WikiSearchModel implements SearchModelInterface {
         return lastSearchResult;
     }
     private void notifySearchHasFinishedListener() {
-        searchModelListener.searchHasFinished();
+        for(WikiSearchModelListener searchModelListener : searchModelListeners)
+            searchModelListener.searchHasFinished();
     }
     public void setListener(WikiSearchModelListener searchModelListener) {
-        this.searchModelListener = searchModelListener;
+        searchModelListeners.add(searchModelListener);
     }
 
 }

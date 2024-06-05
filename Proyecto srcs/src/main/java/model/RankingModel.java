@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class RankingModel implements Model{
-    private RankingModelListener rankingModelListener;
+    private ArrayList<RankingModelListener> rankingModelListeners = new ArrayList<>();
     private DataBase localDataBase;
     private ArrayList<RatedSeries> lastUpdatedRanking;
 
@@ -20,13 +20,13 @@ public class RankingModel implements Model{
         this.localDataBase = localDataBase;
     }
     public void setListener(RankingModelListener rankingModelListener) {
-        this.rankingModelListener = rankingModelListener;
+        this.rankingModelListeners.add(rankingModelListener);
     }
     public void updateRanking() throws SQLException{
         try {
              lastUpdatedRanking = localDataBase.getRankedSeries();
              sortRankingByScore();
-             rankingModelListener.rankingHasChanged();
+             notifyRankingHasChanged();
         } catch (SQLException e) {
             throw new SQLException();
         }
@@ -42,5 +42,10 @@ public class RankingModel implements Model{
             }
         };
         lastUpdatedRanking.sort(comparator);
+    }
+    private void notifyRankingHasChanged() {
+        for (RankingModelListener rankingModelListener : rankingModelListeners) {
+            rankingModelListener.rankingHasChanged();
+        }
     }
 }
