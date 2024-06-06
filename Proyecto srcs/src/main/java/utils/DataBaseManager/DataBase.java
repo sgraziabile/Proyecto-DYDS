@@ -5,7 +5,7 @@ import model.entities.RatedSeries;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DataBase {
+public class DataBase implements DataBaseInterface{
   private DBDelete dbDelete;
   private DBInsert dbInsert;
   private DBSelect dbSelect;
@@ -15,7 +15,7 @@ public class DataBase {
     dbInsert = new DBInsert();
     dbSelect = new DBSelect();
   }
-  public static void loadDatabase() {
+  public void loadDatabase() {
     String url = "jdbc:sqlite:./dictionary.db";
 
     try (Connection connection = DriverManager.getConnection(url)) {
@@ -47,7 +47,7 @@ public class DataBase {
       throw new SQLException();
     }
   }
-  public  String getSavedSeriesExctract(String title) throws SQLException {
+  public  String getSavedSeriesExtract(String title) throws SQLException {
       try {
       return dbSelect.getSavedSeriesExctract(title);
         } catch (SQLException e) {
@@ -63,7 +63,7 @@ public class DataBase {
   }
   public void updateSeriesScore(String title, String score) throws  SQLException {
     try {
-    dbInsert.updateSeriesScore(title, score);
+      dbInsert.updateSeriesScore(title, score);
     } catch (SQLException e) {
       throw new SQLException();
     }

@@ -15,7 +15,6 @@ public class DBInsert {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-            System.out.println("INSERT  " + title + "', '"+ extract);
 
             statement.executeUpdate("replace into catalog values(null, '"+ title + "', '"+ extract + "', 1)");
         }

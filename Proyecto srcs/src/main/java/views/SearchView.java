@@ -77,12 +77,14 @@ public class SearchView extends JPanel implements View {
     public String getSelectedSeriesPaneText() {
         return selectedSeriesPane.getText();
     }
+    public void setSelectedSeriesPaneText(String text) {
+        selectedSeriesPane.setText(text);
+    }
     public String getScore() { return scoreComboBox.getSelectedItem().toString();}
     private void setupSelectedSeriesPaneContentType() {
         selectedSeriesPane.setContentType("text/html");
         selectedSeriesPane.setEditable(false);
     }
-
     public void setWorkingStatus() {
         for(Component c: this.searchPanel.getComponents()) c.setEnabled(false);
         selectedSeriesPane.setEnabled(false);
@@ -105,4 +107,5 @@ public class SearchView extends JPanel implements View {
     }
     public void showEventNotifier(String eventMessage) {eventNotifier.showMessageDialog(this, eventMessage);}
     public void setSearchTextField(String text) {searchTextField.setText(text);}
+
 }

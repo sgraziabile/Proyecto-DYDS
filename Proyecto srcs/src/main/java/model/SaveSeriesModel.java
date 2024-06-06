@@ -18,9 +18,9 @@ public class SaveSeriesModel {
     public void setListener(SaveSeriesModelListener saveSeriesModelListener) {
         this.saveSeriesModelListeners.add(saveSeriesModelListener);
     }
-    public void saveSeries(String seriesTitle, String seriesExctract) throws SQLException {
+    public void saveSeries(String seriesTitle, String seriesExtract) throws SQLException {
         try {
-            localDataBase.saveSeriesContent(seriesTitle.replace("'", "`"),seriesExctract );
+            localDataBase.saveSeriesContent(seriesTitle.replace("'", "`"),seriesExtract );
             notifySaveSeriesHasFinished();
         } catch (Exception e) {
             throw new SQLException();

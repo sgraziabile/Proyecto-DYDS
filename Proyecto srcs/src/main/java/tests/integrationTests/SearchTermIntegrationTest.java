@@ -1,4 +1,4 @@
-package tests.unitTests;
+package tests.integrationTests;
 
 import model.WikiPageModel;
 import model.WikiSearchModel;
@@ -44,8 +44,5 @@ public class SearchTermIntegrationTest {
             e.printStackTrace();
         }
         assertEquals("Breaking Bad", presenterToTest.getLastSearchResultsList().get(0).getTitle());
-    }
-    private String mockJsonResponse() {
-        return "";
     }
 }

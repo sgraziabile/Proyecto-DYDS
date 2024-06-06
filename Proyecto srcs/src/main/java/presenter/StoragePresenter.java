@@ -74,7 +74,7 @@ public class StoragePresenter implements Presenter{
     public  void getSavedSeries() {
         taskThread = new Thread(() -> {
             try {
-            retrieveSeriesModel.getSavedSeries();
+                retrieveSeriesModel.getSavedSeries();
             }catch(SQLException e) {
                 storageView.showEventNotifier("Error retrieving saved series");
             }

@@ -60,6 +60,9 @@ public class StorageView extends JPanel implements View {
     public Object getSelectedSavedSeries() {
         return savedShowsComboBox.getSelectedItem();
     }
+    public String getSelectedSavedSeriesTitle() {
+        return savedShowsComboBox.getSelectedItem().toString();
+    }
     private void setupSavedSeriesPaneContentType() {
         savedSeriesPane.setContentType("text/html");
     }

@@ -1,6 +1,5 @@
 package model;
 
-import model.entities.Series;
 import utils.DataBaseManager.DataBase;
 import model.listeners.SeriesContentModelListener;
 
@@ -23,7 +22,7 @@ public class SeriesContentModel implements Model{
     }
     public void showSeriesContent(String seriesTitle) throws SQLException {
         try {
-            lastSeriesContent = localDataBase.getSavedSeriesExctract(seriesTitle);
+            lastSeriesContent = localDataBase.getSavedSeriesExtract(seriesTitle);
             notifyShowSeriesContentHasFinished();
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());

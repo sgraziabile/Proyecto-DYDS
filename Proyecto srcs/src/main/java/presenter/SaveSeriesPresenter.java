@@ -20,8 +20,8 @@ public class SaveSeriesPresenter implements Presenter {
             @Override
             public void saveSeriesHasFinished() {
                 clearSearchView();
-                searchView.showEventNotifier("TV series saved successfully!");
                 storagePresenter.updateSavedSeriesContent();
+                searchView.showEventNotifier("TV series saved successfully!");
             }
         });
     }
@@ -37,15 +37,18 @@ public class SaveSeriesPresenter implements Presenter {
     public void setSaveSeriesModel(SaveSeriesModel saveSeriesModel) {this.saveSeriesModel = saveSeriesModel;}
     public void onSavedLocallyButtonClicked() {
         String seriesTitle = searchPresenter.getLastSeriesTitle();
-        String seriesExctract = searchView.getSelectedSeriesPaneText();
-        if(seriesExctract != null) {
-            requestSaveSeries(seriesTitle, seriesExctract);
+        String seriesExtract = searchView.getSelectedSeriesPaneText();
+        if(!searchView.getSearchFieldText().equals("")) {
+            requestSaveSeries(seriesTitle, seriesExtract);
+        }
+        else {
+            searchView.showEventNotifier("No series selected!");
         }
     }
-    private void requestSaveSeries(String seriesTitle, String seriesExctract) {
+    private void requestSaveSeries(String seriesTitle, String seriesExtract) {
         taskThread = new Thread(() -> {
             try {
-            saveSeriesModel.saveSeries(seriesTitle, seriesExctract);
+            saveSeriesModel.saveSeries(seriesTitle, seriesExtract);
             } catch (Exception e) {
                 searchView.showEventNotifier("Error saving TV series");
             }
