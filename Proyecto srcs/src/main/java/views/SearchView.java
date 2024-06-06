@@ -103,8 +103,6 @@ public class SearchView extends JPanel implements View {
     public void clearSearchField() {
         searchTextField.setText("");
     }
-    public void showEventNotifier(String eventMessage) {
-        eventNotifier.showMessageDialog(this, eventMessage);
-    }
-
+    public void showEventNotifier(String eventMessage) {eventNotifier.showMessageDialog(this, eventMessage);}
+    public void setSearchTextField(String text) {searchTextField.setText(text);}
 }

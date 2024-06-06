@@ -24,7 +24,7 @@ public class WikiSearchModel implements SearchModelInterface {
     public void setLocalDataBase(DataBase localDataBase) {
         this.localDataBase = localDataBase;
     }
-    public void setSearchApiConsumer(SearchApiConsumerInterface searchApiConsumer) {
+    public void setSearchApiConsumer(SearchApiConsumer searchApiConsumer) {
         this.searchApiConsumer = searchApiConsumer;
     }
     public void searchTerm(String termToSearch, int limit) throws Exception {

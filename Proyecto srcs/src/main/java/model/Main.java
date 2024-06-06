@@ -92,8 +92,8 @@ public class Main {
         searchRankingModel.setSearchApiConsumer(searchApiConsumer);
         wikiPageModel.setPageApiConsumer(pageApiConsumer);
 
-
         storageView.requestSavedSeries();
         scoreView.showSeriesRanking();
+
     }
 }

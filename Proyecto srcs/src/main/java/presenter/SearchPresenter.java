@@ -17,6 +17,7 @@ import views.SearchView;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,7 @@ public class SearchPresenter implements Presenter{
     private JPopupMenu searchOptionsMenu;
     private String lastSeriesTitle;
     private JsonParser jsonParser;
+    private ArrayList<Series> lastSearchResultsList = new ArrayList<>();
 
 
     public SearchPresenter(WikiSearchModel searchModel, WikiPageModel pageModel) {
@@ -88,7 +90,7 @@ public class SearchPresenter implements Presenter{
         }
     }
 
-    private void requestSearch(String termToSearch, int limit) throws Exception {
+    public void requestSearch(String termToSearch, int limit) throws Exception {
         try {
             taskThread = new Thread(() -> {
                 try {
@@ -113,6 +115,7 @@ public class SearchPresenter implements Presenter{
             taskThread.start();
     }
     private void showSearchResult() {
+        lastSearchResultsList = new ArrayList<>();
         Response<String> lastSearchResult = searchModel.getLastSearchResult();
         JsonArray jsonResults = jsonParser.getJsonResults(lastSearchResult);
         this.searchOptionsMenu = new JPopupMenu("Search Results");
@@ -125,6 +128,7 @@ public class SearchPresenter implements Presenter{
                     Series series = jsonParser.buildSeriesFromJson(jasonResult);
                     int seriesScore = Integer.parseInt(searchModel.getSeriesScore(series.getTitle()));
                     series.setScore(seriesScore);
+                    lastSearchResultsList.add(series);
                     addSeriesToSearchOptionsMenu(series);
                 }
             } catch (SQLException e) {
@@ -166,6 +170,9 @@ public class SearchPresenter implements Presenter{
     }
     public void notifySearchError() {
         searchView.showEventNotifier("Search couldn't be made");
+    }
+    public ArrayList<Series> getLastSearchResultsList() {
+        return lastSearchResultsList;
     }
 
 }

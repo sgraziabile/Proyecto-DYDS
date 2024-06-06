@@ -136,7 +136,7 @@ public class StoragePresenter implements Presenter{
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
         taskThread = new Thread(() -> {
             try {
-            seriesContentModel.showSeriesContent(selectedSeriesTitle.toString());
+                seriesContentModel.showSeriesContent(selectedSeriesTitle.toString());
             }catch(SQLException e) {
                 storageView.showEventNotifier(e.getMessage());
             }
