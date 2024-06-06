@@ -19,6 +19,7 @@ public class StoragePresenter implements Presenter{
     private DeleteSeriesModel deleteSeriesModel;
     private RetrieveSeriesModel retrieveSeriesModel;
     private SeriesContentModel seriesContentModel;
+    private SearchPresenter searchPresenter;
     private HtmlHandler htmlHandler;
 
     public StoragePresenter(RetrieveSeriesModel retrieveSeriesModel, SaveChangesModel saveChangesModel, DeleteSeriesModel deleteSeriesModel, SeriesContentModel seriesContentModel) {
@@ -67,6 +68,9 @@ public class StoragePresenter implements Presenter{
     public void setShowSeriesContentModel(SeriesContentModel seriesContentModel) {
         this.seriesContentModel = seriesContentModel;
     }
+    public void setSearchPresenter(SearchPresenter searchPresenter) {
+        this.searchPresenter = searchPresenter;
+    }
 
     public void setStorageView(StorageView storageView) {
         this.storageView = storageView;
@@ -100,6 +104,7 @@ public class StoragePresenter implements Presenter{
     public void updateSavedSeriesContent() {
         showSavedSeries();
         storageView.clearSavedSeriesContent();
+        searchPresenter.clearLastSeriesTitle();
     }
     public void onSaveChangesClick() {
         saveChanges();

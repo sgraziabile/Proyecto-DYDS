@@ -2,7 +2,6 @@ package model;
 
 import model.APIs.WikipediaPageAPI;
 import model.entities.Series;
-import model.interfaces.PageModelInterface;
 import model.listeners.WikiPageModelListener;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -12,7 +11,7 @@ import utils.APIConsumer.PageApiConsumer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class WikiPageModel implements PageModelInterface {
+public class WikiPageModel implements Model {
 
     private PageApiConsumer pageApiConsumer;
     private ArrayList<WikiPageModelListener> pageModelListeners = new ArrayList<>();

@@ -10,7 +10,6 @@ public class DBDelete {
     public static void deleteSavedSeries(String title) throws SQLException{
         Connection connection = null;
         try {
-            // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.

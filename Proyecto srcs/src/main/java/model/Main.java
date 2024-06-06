@@ -48,6 +48,7 @@ public class Main {
 
         storagePresenter.setSaveChangesModel(saveChangesModel);
         storagePresenter.setDeleteSeriesModel(deleteSeriesModel);
+        storagePresenter.setSearchPresenter(searchPresenter);
 
         BaseView baseView = new BaseView();
         SearchView searchView = baseView.getSearchView();

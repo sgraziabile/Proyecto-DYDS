@@ -38,7 +38,7 @@ public class SaveSeriesPresenter implements Presenter {
     public void onSavedLocallyButtonClicked() {
         String seriesTitle = searchPresenter.getLastSeriesTitle();
         String seriesExtract = searchView.getSelectedSeriesPaneText();
-        if(!searchView.getSearchFieldText().equals("")) {
+        if(!searchView.getSearchFieldText().equals("") && seriesTitle!= "") {
             requestSaveSeries(seriesTitle, seriesExtract);
         }
         else {
@@ -48,7 +48,7 @@ public class SaveSeriesPresenter implements Presenter {
     private void requestSaveSeries(String seriesTitle, String seriesExtract) {
         taskThread = new Thread(() -> {
             try {
-            saveSeriesModel.saveSeries(seriesTitle, seriesExtract);
+                saveSeriesModel.saveSeries(seriesTitle, seriesExtract);
             } catch (Exception e) {
                 searchView.showEventNotifier("Error saving TV series");
             }

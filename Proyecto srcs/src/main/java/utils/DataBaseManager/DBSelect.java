@@ -68,11 +68,9 @@ public class DBSelect {
     public String getSavedSeriesExctract(String title) throws SQLException {
         Connection connection = null;
         try {
-            // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
             ResultSet rs = statement.executeQuery("select * from catalog WHERE title = '" + title + "'" );
             rs.next();
             return rs.getString("extract");
@@ -95,11 +93,9 @@ public class DBSelect {
         ArrayList<String> titles = new ArrayList<>();
         Connection connection = null;
         try {
-            // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
             ResultSet rs = statement.executeQuery("select * from catalog");
             while(rs.next()) titles.add(rs.getString("title"));
         }

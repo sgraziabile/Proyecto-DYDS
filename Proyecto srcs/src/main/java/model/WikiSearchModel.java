@@ -1,7 +1,6 @@
 package model;
 
 import model.APIs.WikipediaSearchAPI;
-import model.interfaces.SearchModelInterface;
 import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
@@ -11,7 +10,7 @@ import utils.DataBaseManager.DataBase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class WikiSearchModel implements SearchModelInterface {
+public class WikiSearchModel implements Model {
     private WikipediaSearchAPI searchAPI;
     private ArrayList<WikiSearchModelListener> searchModelListeners = new ArrayList<>();
     private Response<String> lastSearchResult;

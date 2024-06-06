@@ -1,12 +1,10 @@
 package tests.integrationTests;
 
-import model.DeleteSeriesModel;
-import model.RetrieveSeriesModel;
-import model.SaveChangesModel;
-import model.SeriesContentModel;
+import model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import presenter.SearchPresenter;
 import presenter.StoragePresenter;
 import utils.DataBaseManager.DataBase;
 import views.StorageView;
@@ -31,6 +29,7 @@ public class DeleteSeriesIntegrationTest {
         RetrieveSeriesModel retrieveSeriesModel = new RetrieveSeriesModel();
         presenterToTest = new StoragePresenter(retrieveSeriesModel, new SaveChangesModel(), deleteSeriesModel, new SeriesContentModel());
         presenterToTest.setStorageView(storageView);
+        presenterToTest.setSearchPresenter(new SearchPresenter(new WikiSearchModel(), new WikiPageModel()));
         storageView.setStoragePresenter(presenterToTest);
         dataBaseMock = mock(DataBase.class);
         deleteSeriesModel.setLocalDataBase(dataBaseMock);

@@ -151,6 +151,7 @@ public class SearchPresenter implements Presenter{
                 retrievedSeriesExtract += searchResultExtract2.getAsString().replace("\\n", "\n");
                 retrievedSeriesExtract = htmlHandler.textToHtml(retrievedSeriesExtract);
                 searchView.showSelectedSeries(retrievedSeriesExtract);
+                searchView.setSearchTextField(series.getTitle());
                 searchView.setWaitingStatus();
                 searchView.allowScoreUpdate();
             }
@@ -167,6 +168,9 @@ public class SearchPresenter implements Presenter{
     }
     public String getLastSeriesTitle() {
         return lastSeriesTitle;
+    }
+    public void clearLastSeriesTitle(){
+        lastSeriesTitle = "";
     }
     public void notifySearchError() {
         searchView.showEventNotifier("Search couldn't be made");

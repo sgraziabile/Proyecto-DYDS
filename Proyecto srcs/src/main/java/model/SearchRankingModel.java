@@ -1,13 +1,12 @@
 package model;
 
-import model.interfaces.SearchModelInterface;
 import model.listeners.SearchRankingModelListener;
 import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
 
 import java.util.ArrayList;
 
-public class SearchRankingModel implements SearchModelInterface {
+public class SearchRankingModel implements Model{
     private ArrayList<SearchRankingModelListener> searchRankingModelListeners = new ArrayList<>();
     private SearchApiConsumer searchApiConsumer;
     private Response<String> lastSearchResult;
