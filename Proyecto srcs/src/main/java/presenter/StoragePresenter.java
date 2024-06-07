@@ -112,14 +112,11 @@ public class StoragePresenter implements Presenter{
     private void saveChanges() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
         String modifiedExtract  = storageView.getSelectedSeriesContent();
-        taskThread = new Thread(() -> {
-            try {
+        try {
             saveChangesModel.saveChanges(selectedSeriesTitle.toString(), modifiedExtract);
-            }catch(SQLException e) {
-                storageView.showEventNotifier("Error saving changes");
-            }
-        });
-        taskThread.start();
+        }catch(SQLException e) {
+            storageView.showEventNotifier("Error saving changes");
+        }
     }
     public void onDeleteClick() {
         if(storageView.isSelectedOption()) {
@@ -128,14 +125,11 @@ public class StoragePresenter implements Presenter{
     }
     private void deleteSelectedSeries() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();
-        taskThread = new Thread(() -> {
             try {
                 deleteSeriesModel.deleteSeries(selectedSeriesTitle.toString());
             }catch(SQLException e) {
                 storageView.showEventNotifier("Error deleting series");
             }
-        });
-        taskThread.start();
     }
     public void onSavedSeriesSelected() {
         Object selectedSeriesTitle = storageView.getSelectedSavedSeries();

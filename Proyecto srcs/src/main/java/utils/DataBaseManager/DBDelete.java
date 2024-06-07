@@ -12,7 +12,7 @@ public class DBDelete {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
             Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.setQueryTimeout(30);
 
             statement.executeUpdate("DELETE FROM catalog WHERE title = '" + title + "'" );
         }

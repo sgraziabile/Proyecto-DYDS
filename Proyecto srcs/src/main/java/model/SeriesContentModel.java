@@ -1,6 +1,5 @@
 package model;
 
-import utils.DataBaseManager.DataBase;
 import model.listeners.SeriesContentModelListener;
 import utils.DataBaseManager.DataBaseInterface;
 

@@ -65,7 +65,7 @@ public class DBSelect {
             }
         }
     }
-    public String getSavedSeriesExctract(String title) throws SQLException {
+    public String getSavedSeriesExtract(String title) throws SQLException {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:./dictionary.db");
@@ -84,7 +84,6 @@ public class DBSelect {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
                 throw new SQLException(e.getMessage());
             }
         }

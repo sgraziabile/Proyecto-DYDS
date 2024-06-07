@@ -1,6 +1,5 @@
 package model;
 
-import utils.DataBaseManager.DataBase;
 import model.listeners.SaveChangesModelListener;
 import utils.DataBaseManager.DataBaseInterface;
 

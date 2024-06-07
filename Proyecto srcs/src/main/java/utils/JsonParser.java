@@ -14,8 +14,8 @@ import java.util.Set;
 public class JsonParser {
     public JsonArray getJsonResults(Response<String> lastSearchResult) {
         Gson gson = new Gson();
-        JsonObject jobj = gson.fromJson(lastSearchResult.body(), JsonObject.class);
-        JsonObject query = jobj.get("query").getAsJsonObject();
+        JsonObject jsonObject = gson.fromJson(lastSearchResult.body(), JsonObject.class);
+        JsonObject query = jsonObject.get("query").getAsJsonObject();
         Iterator<JsonElement> resultIterator = query.get("search").getAsJsonArray().iterator();
         JsonArray jsonResults = query.get("search").getAsJsonArray();
         return jsonResults;
@@ -31,8 +31,8 @@ public class JsonParser {
     }
     public JsonElement getSearchResultExctract(Response<String> lastRetrievedSeries) {
         Gson gson = new Gson();
-        JsonObject jobj2 = gson.fromJson(lastRetrievedSeries.body(), JsonObject.class);
-        JsonObject query2 = jobj2.get("query").getAsJsonObject();
+        JsonObject jsonObject = gson.fromJson(lastRetrievedSeries.body(), JsonObject.class);
+        JsonObject query2 = jsonObject.get("query").getAsJsonObject();
         JsonObject pages = query2.get("pages").getAsJsonObject();
         Set<Map.Entry<String, JsonElement>> pagesSet = pages.entrySet();
         Map.Entry<String, JsonElement> first = pagesSet.iterator().next();

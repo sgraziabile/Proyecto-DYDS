@@ -5,9 +5,7 @@ import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
 import utils.APIConsumer.SearchApiConsumerInterface;
-import utils.DataBaseManager.DataBase;
 import utils.DataBaseManager.DataBaseInterface;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 

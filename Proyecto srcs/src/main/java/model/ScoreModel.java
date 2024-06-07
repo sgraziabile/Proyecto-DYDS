@@ -1,12 +1,10 @@
 package model;
 
 import model.listeners.ScoreModelListener;
-import utils.DataBaseManager.DataBase;
 import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ScoreModel implements Model {
     private DataBaseInterface localDataBase;

@@ -1,7 +1,6 @@
 package presenter;
 
 import model.RankingModel;
-import model.ScoreModel;
 import model.SearchRankingModel;
 import model.entities.RatedSeries;
 import model.listeners.RankingModelListener;

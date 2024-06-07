@@ -50,15 +50,12 @@ public class DeleteSeriesIntegrationTest {
             when(dataBaseMock.getSavedSeriesTitles()).thenReturn(seriesList);
             doAnswer(invocation -> {
                 seriesList.remove(titleToDelete);
-                System.out.println(seriesList.size());
                 return null;
             }).when(dataBaseMock).deleteSavedSeries(titleToDelete);
-            //deleteSeriesModel.deleteSeries(titleToDelete);
             presenterToTest.onDeleteClick();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(seriesList.size());
         assertEquals(0, seriesList.size());
     }
 }

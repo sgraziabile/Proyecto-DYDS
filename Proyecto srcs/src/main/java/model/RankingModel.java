@@ -2,10 +2,7 @@ package model;
 
 import model.entities.RatedSeries;
 import model.listeners.RankingModelListener;
-import utils.DataBaseManager.DataBase;
 import utils.DataBaseManager.DataBaseInterface;
-
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;

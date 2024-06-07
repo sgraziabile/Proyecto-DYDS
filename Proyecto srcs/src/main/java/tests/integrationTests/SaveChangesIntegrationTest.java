@@ -12,7 +12,7 @@ import utils.DataBaseManager.DataBaseInterface;
 import views.StorageView;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -34,7 +34,6 @@ public class SaveChangesIntegrationTest {
         dataBaseMock = mock(DataBaseInterface.class);
         saveChangesModel.setLocalDataBase(dataBaseMock);
     }
-    /*
     @Test
     public void testSaveChanges() {
         ArrayList<String> seriesList = new ArrayList<>();
@@ -50,14 +49,12 @@ public class SaveChangesIntegrationTest {
             doAnswer(invocation -> {
                 actualContent[0] = "This is the original extract but with some changes";
                 return null;
-            }).when((dataBaseMock).saveSeriesContent(seriesTitle, newExtract));
-            saveChangesModel.saveChanges(seriesTitle, newExtract);
+            }).when(dataBaseMock).saveSeriesContent(seriesTitle, newExtract);
+            presenterToTest.onSaveChangesClick();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(actualContent,"This is the original extract but with some changes");
+        assertEquals("This is the original extract with some changes",actualContent[0]);
     }
-    */
-
 
 }

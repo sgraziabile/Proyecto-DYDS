@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import presenter.SearchPresenter;
 import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
+import utils.DataBaseManager.DataBaseInterface;
 import views.SearchView;
 
 import static org.junit.Assert.assertEquals;
@@ -19,6 +20,7 @@ public class SearchTermIntegrationTest {
     private SearchView viewToTest;
     @Mock
     private SearchApiConsumer searchApiConsumer;
+    private DataBaseInterface dataBaseMock;
 
     @Before
     public void setUp() {
@@ -29,7 +31,9 @@ public class SearchTermIntegrationTest {
         presenterToTest.setSearchView(viewToTest);
         viewToTest.setSearchPresenter(presenterToTest);
         searchApiConsumer = mock(SearchApiConsumer.class);
+        dataBaseMock = mock(DataBaseInterface.class);
         searchModel.setSearchApiConsumer(searchApiConsumer);
+        searchModel.setLocalDataBase(dataBaseMock);
     }
     @Test
     public void testSearchTermWithLimit1() throws InterruptedException {
@@ -38,6 +42,7 @@ public class SearchTermIntegrationTest {
         viewToTest.setSearchTextField("breaking bad");
         String termToSearch = viewToTest.getSearchFieldText();
         try {
+            when(dataBaseMock.getSeriesScore("Breaking Bad")).thenReturn("0");
             when(searchApiConsumer.searchTerm(termToSearch, 1)).thenReturn(response);
             presenterToTest.requestSearch(termToSearch, 1);
         } catch (Exception e) {

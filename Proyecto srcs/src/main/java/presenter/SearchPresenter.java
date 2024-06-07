@@ -1,12 +1,9 @@
 package presenter;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import model.WikiPageModel;
 import model.WikiSearchModel;
-import model.listeners.SearchRankingModelListener;
 import utils.HtmlHandler;
 import model.entities.Series;
 import model.listeners.WikiPageModelListener;
@@ -14,13 +11,9 @@ import model.listeners.WikiSearchModelListener;
 import retrofit2.Response;
 import utils.JsonParser;
 import views.SearchView;
-
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 public class SearchPresenter implements Presenter{
     private WikiSearchModel searchModel;
@@ -92,16 +85,9 @@ public class SearchPresenter implements Presenter{
 
     public void requestSearch(String termToSearch, int limit) throws Exception {
         try {
-            taskThread = new Thread(() -> {
-                try {
-                    searchModel.searchTerm(termToSearch, limit);
-                } catch (Exception e) {
-                    notifySearchError();
-                }
-            });
-            taskThread.start();
+            searchModel.searchTerm(termToSearch, limit);
         }catch(Exception e) {
-            throw new Exception();
+            notifySearchError();
         }
     }
     private void requestRetrieveSeries(Series selectedSeries) {

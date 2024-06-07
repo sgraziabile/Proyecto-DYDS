@@ -24,7 +24,7 @@ public class DataBase implements DataBaseInterface{
         DatabaseMetaData meta = connection.getMetaData();
 
         Statement statement = connection.createStatement();
-        statement.setQueryTimeout(30);  // set timeout to 30 sec.
+        statement.setQueryTimeout(30);
         statement.executeUpdate("create table if not exists catalog (id INTEGER, title string PRIMARY KEY, extract string, source integer)");
         statement.executeUpdate("create table if not exists ranking(title string PRIMARY KEY, score integer, lastUpdate date)");
       }
@@ -49,7 +49,7 @@ public class DataBase implements DataBaseInterface{
   }
   public String getSavedSeriesExtract(String title) throws SQLException {
       try {
-      return dbSelect.getSavedSeriesExctract(title);
+      return dbSelect.getSavedSeriesExtract(title);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         }
