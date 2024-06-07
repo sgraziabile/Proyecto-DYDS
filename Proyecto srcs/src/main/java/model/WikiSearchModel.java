@@ -6,6 +6,7 @@ import retrofit2.Response;
 import utils.APIConsumer.SearchApiConsumer;
 import utils.APIConsumer.SearchApiConsumerInterface;
 import utils.DataBaseManager.DataBase;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ public class WikiSearchModel implements Model {
     private WikipediaSearchAPI searchAPI;
     private ArrayList<WikiSearchModelListener> searchModelListeners = new ArrayList<>();
     private Response<String> lastSearchResult;
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
     private SearchApiConsumerInterface searchApiConsumer;
 
     public WikiSearchModel() {
 
     }
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setSearchApiConsumer(SearchApiConsumer searchApiConsumer) {

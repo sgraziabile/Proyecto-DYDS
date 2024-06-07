@@ -27,12 +27,15 @@ public class DeleteSeriesIntegrationTest {
         storageView = new StorageView();
         deleteSeriesModel = new DeleteSeriesModel();
         RetrieveSeriesModel retrieveSeriesModel = new RetrieveSeriesModel();
-        presenterToTest = new StoragePresenter(retrieveSeriesModel, new SaveChangesModel(), deleteSeriesModel, new SeriesContentModel());
+        SeriesContentModel seriesContentModel = new SeriesContentModel();
+        seriesContentModel.setLastSeriesContent("Breaking Bad");
+        presenterToTest = new StoragePresenter(retrieveSeriesModel, new SaveChangesModel(), deleteSeriesModel,seriesContentModel);
         presenterToTest.setStorageView(storageView);
         presenterToTest.setSearchPresenter(new SearchPresenter(new WikiSearchModel(), new WikiPageModel()));
         storageView.setStoragePresenter(presenterToTest);
         dataBaseMock = mock(DataBase.class);
         deleteSeriesModel.setLocalDataBase(dataBaseMock);
+        seriesContentModel.setLocalDataBase(dataBaseMock);
         retrieveSeriesModel.setLocalDataBase(dataBaseMock);
     }
     @Test
@@ -41,18 +44,21 @@ public class DeleteSeriesIntegrationTest {
         seriesList.add("Breaking Bad");
         Object[] formattedSeries = seriesList.stream().sorted().toArray();
         storageView.showSavedSeries(formattedSeries);
+        storageView.setSelectedOption(0);
         String titleToDelete = storageView.getSelectedSavedSeriesTitle();
         try {
             when(dataBaseMock.getSavedSeriesTitles()).thenReturn(seriesList);
             doAnswer(invocation -> {
                 seriesList.remove(titleToDelete);
+                System.out.println(seriesList.size());
                 return null;
             }).when(dataBaseMock).deleteSavedSeries(titleToDelete);
-            deleteSeriesModel.deleteSeries(titleToDelete);
+            //deleteSeriesModel.deleteSeries(titleToDelete);
+            presenterToTest.onDeleteClick();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(seriesList.size());
         assertEquals(0, seriesList.size());
     }
-
 }

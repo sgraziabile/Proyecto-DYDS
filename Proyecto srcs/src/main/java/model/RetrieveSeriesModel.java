@@ -2,19 +2,20 @@ package model;
 
 import utils.DataBaseManager.DataBase;
 import model.listeners.RetrieveSeriesModelListener;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RetrieveSeriesModel implements Model {
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
     private ArrayList<RetrieveSeriesModelListener> retrieveSeriesModelListeners = new ArrayList<>();
     private ArrayList<String> savedSeriesTitles;
 
     public RetrieveSeriesModel() {
 
     }
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setListener(RetrieveSeriesModelListener retrieveSeriesModelListener) {
@@ -30,7 +31,7 @@ public class RetrieveSeriesModel implements Model {
     }
     public ArrayList<String> getSavedSeriesTitles() throws SQLException {
         try {
-        return localDataBase.getSavedSeriesTitles();
+            return localDataBase.getSavedSeriesTitles();
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         }

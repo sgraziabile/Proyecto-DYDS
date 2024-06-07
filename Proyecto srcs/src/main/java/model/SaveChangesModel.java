@@ -2,18 +2,19 @@ package model;
 
 import utils.DataBaseManager.DataBase;
 import model.listeners.SaveChangesModelListener;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SaveChangesModel implements Model{
     private ArrayList<SaveChangesModelListener> saveChangesModelListeners = new ArrayList<>();
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
 
     public SaveChangesModel() {
 
     }
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setListener(SaveChangesModelListener saveChangesModelListener) {

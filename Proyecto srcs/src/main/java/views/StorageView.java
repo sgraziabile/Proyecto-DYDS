@@ -72,6 +72,12 @@ public class StorageView extends JPanel implements View {
     public String getSelectedSeriesContent() {
         return savedSeriesPane.getText();
     }
+    public void setSelectedSeriesContent(String seriesContent) {
+        savedSeriesPane.setText(seriesContent);
+    }
+    public void setSelectedOption(int index) {
+        savedShowsComboBox.setSelectedIndex(index);
+    }
     public void clearSavedSeriesContent() {
         savedSeriesPane.setText("");
     }

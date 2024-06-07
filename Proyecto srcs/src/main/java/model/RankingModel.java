@@ -3,6 +3,7 @@ package model;
 import model.entities.RatedSeries;
 import model.listeners.RankingModelListener;
 import utils.DataBaseManager.DataBase;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.lang.reflect.Array;
 import java.sql.SQLException;
@@ -11,12 +12,12 @@ import java.util.Comparator;
 
 public class RankingModel implements Model{
     private ArrayList<RankingModelListener> rankingModelListeners = new ArrayList<>();
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
     private ArrayList<RatedSeries> lastUpdatedRanking;
 
     public RankingModel() {};
 
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setListener(RankingModelListener rankingModelListener) {
@@ -34,6 +35,7 @@ public class RankingModel implements Model{
     public ArrayList<RatedSeries> getLastUpdatedRanking() {
         return lastUpdatedRanking;
     }
+
     private void sortRankingByScore() {
         Comparator<RatedSeries> comparator = new Comparator<RatedSeries>() {
             @Override

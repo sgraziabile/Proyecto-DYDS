@@ -99,6 +99,10 @@ public class SearchView extends JPanel implements View {
         scoreComboBox.setEnabled(true);
         updateScoreButton.setEnabled(true);
     }
+    public void disableUpdateScore() {
+        scoreComboBox.setEnabled(false);
+        updateScoreButton.setEnabled(false);
+    }
     public void clearSelectedSeriesPane() {
         selectedSeriesPane.setText("");
     }

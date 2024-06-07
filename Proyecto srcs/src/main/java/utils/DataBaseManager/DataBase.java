@@ -47,7 +47,7 @@ public class DataBase implements DataBaseInterface{
       throw new SQLException();
     }
   }
-  public  String getSavedSeriesExtract(String title) throws SQLException {
+  public String getSavedSeriesExtract(String title) throws SQLException {
       try {
       return dbSelect.getSavedSeriesExctract(title);
         } catch (SQLException e) {

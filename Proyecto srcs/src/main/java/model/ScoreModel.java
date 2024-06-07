@@ -2,18 +2,19 @@ package model;
 
 import model.listeners.ScoreModelListener;
 import utils.DataBaseManager.DataBase;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ScoreModel implements Model {
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
     private ArrayList<ScoreModelListener> scoreModelListeners = new ArrayList<>();
 
     public ScoreModel() {};
 
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setListener(ScoreModelListener scoreModelListener) {

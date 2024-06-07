@@ -2,18 +2,19 @@ package model;
 
 import utils.DataBaseManager.DataBase;
 import model.listeners.DeleteSeriesModelListener;
+import utils.DataBaseManager.DataBaseInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DeleteSeriesModel implements Model{
     private ArrayList<DeleteSeriesModelListener> deleteSeriesModelListeners = new ArrayList<>();
-    private DataBase localDataBase;
+    private DataBaseInterface localDataBase;
 
     public DeleteSeriesModel() {
 
     }
-    public void setLocalDataBase(DataBase localDataBase) {
+    public void setLocalDataBase(DataBaseInterface localDataBase) {
         this.localDataBase = localDataBase;
     }
     public void setListener(DeleteSeriesModelListener deleteSeriesModelListener) {

@@ -21,6 +21,7 @@ public class SaveSeriesPresenter implements Presenter {
             public void saveSeriesHasFinished() {
                 clearSearchView();
                 storagePresenter.updateSavedSeriesContent();
+                searchView.disableUpdateScore();
                 searchView.showEventNotifier("TV series saved successfully!");
             }
         });
